@@ -18,10 +18,13 @@ class Lcd:
         self.db6 = db6
         self.db5 = db5
         self.db4 = db4
+        
         GPIO.setmode(GPIO.BCM)
         GPIO.setup([self.rs, self.e, self.db7, self.db6, self.db5, self.db4], GPIO.OUT)
 
-        self.function_set(False)
+        self.display_on_off = 1
+        self.cursor_on_off = 1
+        self.cursor_blink = 1
 
     def write_string(self, string):
         for char in string:
