@@ -73,7 +73,7 @@ class Lcd:
         """
         self.instruction([False, False, False, True, bool(sc), bool(rl)])
 
-    def function_set(self, dl=False, n=True, f=False):
+    def _function_set(self, data_length=self.data_length, number_of_lines=self.number_of_lines, character_font=self.character_font):
         """
         Sets interface data length (DL),
         number of display lines (N),
@@ -85,11 +85,10 @@ class Lcd:
         F = 1: 5x10 dots
         F = 0: 5x8 dots (default)
         """
-        if not dl:
-            # operation is handeld as 8 bit instruction
-            self.instruction([False, False, True, bool(dl)])
+        function_set_mask = 32
+        data = funtion_set_mask | (data_length << 4) | (number_of_lines << 3) | (character_font << 2)
 
-        self.instruction([False, False, True, bool(dl), bool(n), bool(f)])
+        self.instruction(data)
 
     def set_ddram_address(self, address=0,  line=0):
         """
