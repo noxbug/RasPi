@@ -22,10 +22,12 @@ class Lcd:
         GPIO.setmode(GPIO.BCM)
         GPIO.setup([self.rs, self.e, self.db7, self.db6, self.db5, self.db4], GPIO.OUT)
 
+        # Display on/off control
         self.display_on_off = 1
         self.cursor_on_off = 1
         self.cursor_blink = 1
-        
+
+        # Function set
         self.data_length = 0 # 4 bit data length
         self.numer_of_lines = 1 # two display lines
         self.character_font = 0 # 5x8 lines font
