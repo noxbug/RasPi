@@ -25,6 +25,10 @@ class Lcd:
         self.display_on_off = 1
         self.cursor_on_off = 1
         self.cursor_blink = 1
+        
+        self.data_length = 0 # 4 bit data length
+        self.numer_of_lines=1 # two display lines
+        self.character_font=0 # 5x8 lines font
 
     def write_string(self, string):
         for char in string:
