@@ -21,6 +21,8 @@ class Lcd:
         GPIO.setmode(GPIO.BCM)
         GPIO.setup([self.rs, self.e, self.db7, self.db6, self.db5, self.db4], GPIO.OUT)
 
+        self.function_set(False)
+
     def write_string(self, string):
         for char in string:
             self.write_char(char)
@@ -34,7 +36,7 @@ class Lcd:
         """"Clears entire display and sets DDRAM address 0 in address counter"""
         self.instruction([False, False, False, False, False, False, True])
 
-    def entry_mode_set(self, id=1, s=0):
+    def entry_mode_set(self, id=True, s=False):
         """
         Sets cursor move direction and specifies display shift.
         These operations are performed during data write and read.
@@ -42,17 +44,17 @@ class Lcd:
         I/D = 0: Decrement
         S = 1: Accompanies display shift
         """
-        self.instruction([False, False, False, False, False, True, id, s])
+        self.instruction([False, False, False, False, False, True, bool(id), bool(s)])
 
-    def display_on_off_control(self, d=1, c=1, b=1):
+    def display_on_off_control(self, d=True, c=True, b=True):
         """
         Sets entire display (D) on/off,
         cursor on/off (C), and
         blinking of cursor position character (B).
         """
-        self.instruction([False, False, False, False, True, d, c, b])
+        self.instruction([False, False, False, False, True, bool(d), bool(c), bool(b)])
 
-    def cursor_or_display_shift(self, sc=1, rl=1):
+    def cursor_or_display_shift(self, sc=True, rl=True):
         """
         Moves cursor and shifts display without changing DDRAM contents
         S/C = 1: Display shift (default)
@@ -60,9 +62,9 @@ class Lcd:
         R/L = 1: Shift to the right (default)
         R/L = 0: Shift to the left
         """
-        self.instruction([False, False, False, True, sc, rl])
+        self.instruction([False, False, False, True, bool(sc), bool(rl)])
 
-    def function_set(self, dl, n=1, f=0):
+    def function_set(self, dl=False, n=True, f=False):
         """
         Sets interface data length (DL),
         number of display lines (N),
@@ -74,7 +76,11 @@ class Lcd:
         F = 1: 5x10 dots
         F = 0: 5x8 dots (default)
         """
-        self.instruction([False, False, True, dl, n, f])
+        if not dl:
+            # operation is handeld as 8 bit instruction
+            self.instruction([False, False, True, bool(dl)])
+
+        self.instruction([False, False, True, bool(dl), bool(n), bool(f)])
 
     def set_ddram_address(self, address=0,  line=0):
         """

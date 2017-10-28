@@ -11,9 +11,12 @@ class Kodi:
 
     def request(self, method, params={}, id=1):
         payload = {'jsonrpc': '2.0', 'method': method, 'params': params, 'id': id}
+        # convert payload to json object and parse as url
         url_param = urllib.parse.urlencode({'request': json.dumps(payload)})
         try:
+            # contact server
             json_response = requests.get(self.url + '?' + url_param, headers=self.headers)
+            # json object to python
             response = json.loads(json_response.text)
             return response['result']
         except:
@@ -28,13 +31,13 @@ class Kodi:
         else:
             return player[0]
 
-    def get_player_item(self):
+    def get_item(self):
         player = self.get_active_players()
         if player['playerid'] == -1:
-            return {}
+            return ''
         else:
             item = self.request('Player.GetItem', {'playerid': player['playerid']}, 'VideoGetItem')
-            return item
+            return item['item']['label']
 
 
 

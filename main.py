@@ -1,15 +1,11 @@
 from kodi import *
 from lcd import*
 
-mykodi = Kodi()
-mykodi.get_player_item()
-
-
-myLcd = Lcd()
-myLcd.write_string('pipi')
-myLcd.set_ddram_address(0,1)
-myLcd.cleanup()
-
+kodi = Kodi()
+player=kodi.get_active_players()
+print(player)
+now_playing = kodi.get_item()
+print(now_playing)
 
 
 print('Done!')
