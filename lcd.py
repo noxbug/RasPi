@@ -107,7 +107,7 @@ class Lcd:
         data.extend(address_bin)
         self.instruction(data)
 
-    def instruction(self, data, rs=False):
+    def instruction(self, data, rs=False, data_length=0):
         """
         HD44780U instruction
         RS = 0: Instruction register
@@ -123,13 +123,15 @@ class Lcd:
         GPIO.output(self.db4, bool((data >> 4) & 1))
         GPIO.output(self.e, False)
 
-        # lower order bits
-        GPIO.output(self.e, True)
-        GPIO.output(self.db7, data[4])
-        GPIO.output(self.db6, data[5])
-        GPIO.output(self.db5, data[6])
-        GPIO.output(self.db4, data[7])
-        GPIO.output(self.e, False)
+        if(data_length == 0):
+            # 4 bit data mode
+            # lower order bits
+            GPIO.output(self.e, True)
+            GPIO.output(self.db7, bool((data >> 3) & 1))
+            GPIO.output(self.db6, bool((data >> 2) & 1))
+            GPIO.output(self.db5, bool((data >> 1) & 1))
+            GPIO.output(self.db4, bool(data & 1))
+            GPIO.output(self.e, False)
 
     def cleanup(self):
         """"Clean up all ports"""
