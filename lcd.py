@@ -37,9 +37,9 @@ class Lcd:
             self.write_char(char)
 
     def write_char(self, char=' '):
-        """"Convert char to binary ascii code"""
-        data = list(map(bool, list(map(int, bin(ord(char))[2:].zfill(8)))))
-        self.instruction(data, True)
+        """"Convert char to integer"""
+        integer = ord(char)
+        self.instruction(integer, True)
 
     def return_home(self):
         """"Clears entire display and sets DDRAM address 0 in address counter"""
@@ -117,23 +117,19 @@ class Lcd:
         GPIO.output(self.rs, rs)
         # higher order bits
         GPIO.output(self.e, True)
-        GPIO.output(self.db7, data[0])
-        GPIO.output(self.db6, data[1])
-        GPIO.output(self.db5, data[2])
-        GPIO.output(self.db4, data[3])
+        GPIO.output(self.db7, bool((data >> 7) & 1))
+        GPIO.output(self.db6, bool((data >> 6) & 1))
+        GPIO.output(self.db5, bool((data >> 5) & 1))
+        GPIO.output(self.db4, bool((data >> 4) & 1))
         GPIO.output(self.e, False)
-        if len(data) > 4:
-            # lower order bits
-            GPIO.output(self.e, True)
-            try:
-                GPIO.output(self.db7, data[4])
-                GPIO.output(self.db6, data[5])
-                GPIO.output(self.db5, data[6])
-                GPIO.output(self.db4, data[7])
-            except:
-                # data contains don't cares
-                pass
-            GPIO.output(self.e, False)
+
+        # lower order bits
+        GPIO.output(self.e, True)
+        GPIO.output(self.db7, data[4])
+        GPIO.output(self.db6, data[5])
+        GPIO.output(self.db5, data[6])
+        GPIO.output(self.db4, data[7])
+        GPIO.output(self.e, False)
 
     def cleanup(self):
         """"Clean up all ports"""
