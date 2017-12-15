@@ -11,4 +11,5 @@ def start_process(process):
         # start process if not running
         call(process + ' &', shell=True)
 
+start_process('transmission-gtk -m')
 start_process('kodi')
