@@ -3,5 +3,5 @@ from time import sleep
 
 
 kodi = Kodi()
-sleep(10)
+sleep(3)
 kodi.update_library()
