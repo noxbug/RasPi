@@ -39,5 +39,9 @@ class Kodi:
             item = self.request('Player.GetItem', {'playerid': player['playerid']}, 'VideoGetItem')
             return item['item']['label']
 
+    def update_library(self):
+        self.request('VideoLibrary.Clean')
+        self.request('VideoLibrary.Scan')
+
 
 
