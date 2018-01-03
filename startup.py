@@ -1,3 +1,6 @@
+## OBSOLETE ##
+# use .desktop files
+
 from subprocess import check_output, call
 from time import sleep
 
