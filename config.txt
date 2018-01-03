@@ -1,10 +1,17 @@
 # installed packages
 sudo apt install samba
 sudo apt install transmission
+sudo apt install gnome-disks
 
 # kodi set video background color to black
 # ~/.bashrc
 alias omxplayer='omxplayer -b'
+
+# kodi powerdown menu
+# ~/.kodi/userdata/advancedsettings.xml
+<advancedsettings>
+	<showexitbutton>true</showexitbutton>
+</advancedsettings>
 
 # autostart kodi
 # ~/.config/autostart/startkodi.desktop
