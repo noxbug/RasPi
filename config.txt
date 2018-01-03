@@ -1,0 +1,45 @@
+# installed packages
+sudo apt install samba
+sudo apt install transmission
+
+# kodi set video background color to black
+# ~/.bashrc
+alias omxplayer='omxplayer -b'
+
+# autostart kodi
+# ~/.config/autostart/startkodi.desktop
+[Desktop Entry]
+Name=Kodi
+Exec=kodi
+Type=Application[Desktop Entry]
+Name=Kodi
+Exec=kodi
+Type=Application
+
+# autostart transmission
+# ~/.config/autostart/starttransmission.desktop
+[Desktop Entry]
+Name=Transmission
+Exec=transmission-gtk -m %U
+Type=Application
+
+# samba configuration
+# /etc/samba/smb.conf
+[share]
+comment = hdd
+path = /media/pi/hdd
+browseable = yes
+writeable = yes
+only guest = no
+create mask = 0777
+directory mask = 0777
+public = yes
+guest ok = yes
+
+# install pycharm
+sudo mv pycharm-professional-4.0.1.tar.gz /opt/
+cd /opt/
+sudo tar -xzvf /opt/pycharm-professional-4.0.1.tar.gz
+sudo rm pycharm-professional-4.0.1.tar.gz
+sudo ln -s /opt/pycharm-4.0.1/bin/pycharm.sh /usr/bin/pycharm
+
