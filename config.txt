@@ -3,6 +3,16 @@ sudo apt install samba
 sudo apt install transmission
 sudo apt install gnome-disks
 
+# raspberry pi configuration
+# interfaces
+camera 	enable
+ssh 	enable
+vnc	enable
+# performance
+overclock: 	high 1000MHz
+gpu memory:	256
+# localisation
+
 # kodi set video background color to black
 # ~/.bashrc
 alias omxplayer='omxplayer -b'
@@ -49,4 +59,3 @@ cd /opt/
 sudo tar -xzvf /opt/pycharm-professional-4.0.1.tar.gz
 sudo rm pycharm-professional-4.0.1.tar.gz
 sudo ln -s /opt/pycharm-4.0.1/bin/pycharm.sh /usr/bin/pycharm
-
