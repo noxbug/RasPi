@@ -23,6 +23,10 @@ class Kodi:
             print('Error: can not connect to Kodi, is Kodi running?')
             quit()
 
+    def introspect(self, method):
+        info = self.request('JSONRPC.Introspect', {'filter': {'id': method, 'type': 'method'}})
+        return info
+
     def get_active_players(self):
         player = self.request('Player.GetActivePlayers')
         if len(player) == 0:
@@ -36,8 +40,9 @@ class Kodi:
         if player['playerid'] == -1:
             return ''
         else:
-            item = self.request('Player.GetItem', {'playerid': player['playerid']}, 'VideoGetItem')
-            return item['item']['label']
+            item = self.request('Player.GetItem', {'playerid': player['playerid']})
+            # return item['item']['label']
+            return item['item']
 
     def update_library(self):
         self.request('VideoLibrary.Clean')
