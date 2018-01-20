@@ -21,7 +21,7 @@ class Subtitle:
                 (?P<end_m>\d\d):
                 (?P<end_s>\d\d),
                 (?P<end_ms>\d\d\d)\n
-                (?P<text>(?:.+\n?)+)""",re.VERBOSE|re.MULTILINE)
+                (?P<text>(?:.+\n?)+)""", re.VERBOSE | re.MULTILINE)
 
     def parse(self, path):
         # open file and read content
