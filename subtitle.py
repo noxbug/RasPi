@@ -1,6 +1,7 @@
+from googletrans import Translator
 import datetime
+import os
 import re
-
 
 class Sub:
     def __init__(self, index, start, end, text):
@@ -10,44 +11,62 @@ class Sub:
         self.text = text
 
 class Subtitle:
-    def __init__(self):
+    def __init__(self, language_id='nl', path=''):
         self.subs = []
+        self.path = path
+        self.language_id = language_id
         self.regex = re.compile(r"""(?P<index>\d+)\n
-                (?P<start_h>\d\d):
-                (?P<start_m>\d\d):
-                (?P<start_s>\d\d),
-                (?P<start_ms>\d\d\d)\s-->\s
-                (?P<end_h>\d\d):
-                (?P<end_m>\d\d):
-                (?P<end_s>\d\d),
-                (?P<end_ms>\d\d\d)\n
+                (?P<start_HH>\d\d):
+                (?P<start_MM>\d\d):
+                (?P<start_SS>\d\d),
+                (?P<start_mmm>\d\d\d)\s-->\s
+                (?P<end_HH>\d\d):
+                (?P<end_MM>\d\d):
+                (?P<end_SS>\d\d),
+                (?P<end_mmm>\d\d\d)\n
                 (?P<text>(?:.+\n?)+)""", re.VERBOSE | re.MULTILINE)
 
-    def parse(self, path):
+    def translate(self):
+        translator = Translator()
+        for sub in self.subs:
+            sub.text = translator.translate(sub.text, dest=self.language_id).text
+        self.save()
+
+    def save(self):
+        path_split = os.path.splitext(self.path)
+        path_language_id = path_split[0] + '_' + self.language_id + path_split[1]
+        file = open(path_language_id, 'w')
+        for sub in self.subs:
+            file.write(str(sub.index) + '\n')
+            file.write(sub.start.isoformat('milliseconds').replace('.', ',') + ' --> ')
+            file.write(sub.end.isoformat('milliseconds').replace('.', ',') + '\n')
+            file.write(sub.text + '\n\n')
+        file.close()
+
+
+    def open(self, path):
         # open file and read content
-        f = open(path)
-        raw_text = f.read()
-        f.close()
+        self.path = path
+        file = open(self.path)
+        raw_text = file.read()
+        file.close()
 
         # parse content
         for match in self.regex.finditer(raw_text):
             index = int(match.group('index'))
-            start_h = int(match.group('start_h'))
-            start_m = int(match.group('start_m'))
-            start_s = int(match.group('start_s'))
-            start_ms = int(match.group('start_ms'))
-            end_h = int(match.group('end_h'))
-            end_m = int(match.group('end_m'))
-            end_s = int(match.group('end_s'))
-            end_ms = int(match.group('end_ms'))
+            start_HH = int(match.group('start_HH'))
+            start_MM = int(match.group('start_MM'))
+            start_SS = int(match.group('start_SS'))
+            start_mmm = int(match.group('start_mmm'))
+            end_HH = int(match.group('end_HH'))
+            end_MM = int(match.group('end_MM'))
+            end_SS = int(match.group('end_SS'))
+            end_mmm = int(match.group('end_mmm'))
             text = match.group('text').rstrip()  # remove trailing \n
 
             # create datetime.time objects
-            start = datetime.time(start_h, start_m, start_s, start_ms*1000)
-            end = datetime.time(end_h, end_m, end_s, end_ms*1000)
+            start = datetime.time(start_HH, start_MM, start_SS, start_mmm*1000)
+            end = datetime.time(end_HH, end_MM, end_SS, end_mmm*1000)
 
             # append subs
             self.subs.append(Sub(index, start, end, text))
-
-subs = Subtitle()
-subs.parse('sub.srt')
