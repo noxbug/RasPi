@@ -24,14 +24,14 @@ class Subtitle:
                 (?P<end_MM>\d\d):
                 (?P<end_SS>\d\d),
                 (?P<end_mmm>\d\d\d)\n
-                (?P<text>(?:.+\n?)+)""", re.VERBOSE | re.MULTILINE)
+                (?P<text>(?:.+\n?)+)""", re.VERBOSE)
 
     def translate(self):
         translator = Translator()
         for sub in self.subs:
             sub.text = translator.translate(sub.text, dest=self.language_id).text
             print('translate ' + str(sub.index) + ' of ' + str(len(self.subs)))
-    self.save()
+        self.save()
 
     def save(self):
         path_split = os.path.splitext(self.path)
