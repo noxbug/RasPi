@@ -31,7 +31,7 @@ class Subtitle:
         for sub in self.subs:
             sub.text = translator.translate(sub.text, dest=self.language_id).text
             print('translate ' + str(sub.index) + ' of ' + str(len(self.subs)))
-        self.save()
+    self.save()
 
     def save(self):
         path_split = os.path.splitext(self.path)

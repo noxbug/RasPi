@@ -1,5 +1,8 @@
 from subtitle import Subtitle
+import sys
+
+path = sys.argv[1]
 
 sub = Subtitle()
-sub.open('/media/pi/hdd/Series/Salamander/S01E05.srt')
+sub.open(path)
 sub.translate()
