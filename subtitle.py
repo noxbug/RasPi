@@ -38,8 +38,8 @@ class Subtitle:
         file = open(path_language_id, 'w')
         for sub in self.subs:
             file.write(str(sub.index) + '\n')
-            file.write(sub.start.isoformat('milliseconds').replace('.', ',') + ' --> ')
-            file.write(sub.end.isoformat('milliseconds').replace('.', ',') + '\n')
+            file.write(sub.start.strftime('%H:%M:%S,%f')[0:12] + ' --> ')
+            file.write(sub.end.strftime('%H:%M:%S,%f')[0:12] + '\n')
             file.write(sub.text + '\n\n')
         file.close()
 
