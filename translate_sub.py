@@ -1,12 +1,5 @@
-from googletrans import Translator
+from subtitle import Subtitle
 
-
-translator = Translator()
-
-f = open('sample.txt')
-
-translation = translator.translate(f.read(), dest='nl').text
-
-f.close()
-
-print(translation)
+sub = Subtitle()
+sub.open('/media/pi/hdd/Series/Salamender/S01E05.srt')
+sub.save()
