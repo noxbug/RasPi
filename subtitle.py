@@ -28,9 +28,10 @@ class Subtitle:
 
     def translate(self):
         translator = Translator()
+        nsubs = str(len(self.subs))
         for sub in self.subs:
             sub.text = translator.translate(sub.text, dest=self.language_id).text
-            print('translate ' + str(sub.index) + ' of ' + str(len(self.subs)))
+            print(' translate ' + str(sub.index) + ' of ' + nsubs, end='\r')
         self.save()
 
     def save(self):
