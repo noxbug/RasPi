@@ -47,28 +47,32 @@ class Subtitle:
 
 
     def open(self, path):
-        # open file and read content
-        self.path = path
-        file = open(self.path)
-        raw_text = file.read()
-        file.close()
+        try:
+            # open file and read content
+            self.path = os.path.splitext(path)[0] + '.srt'
+            file = open(self.path)
+            raw_text = file.read()
+            file.close()
 
-        # parse content
-        for match in self.regex.finditer(raw_text):
-            index = int(match.group('index'))
-            start_HH = int(match.group('start_HH'))
-            start_MM = int(match.group('start_MM'))
-            start_SS = int(match.group('start_SS'))
-            start_mmm = int(match.group('start_mmm'))
-            end_HH = int(match.group('end_HH'))
-            end_MM = int(match.group('end_MM'))
-            end_SS = int(match.group('end_SS'))
-            end_mmm = int(match.group('end_mmm'))
-            text = match.group('text').rstrip()  # remove trailing \n
+            # parse content
+            for match in self.regex.finditer(raw_text):
+                index = int(match.group('index'))
+                start_HH = int(match.group('start_HH'))
+                start_MM = int(match.group('start_MM'))
+                start_SS = int(match.group('start_SS'))
+                start_mmm = int(match.group('start_mmm'))
+                end_HH = int(match.group('end_HH'))
+                end_MM = int(match.group('end_MM'))
+                end_SS = int(match.group('end_SS'))
+                end_mmm = int(match.group('end_mmm'))
+                text = match.group('text').rstrip()  # remove trailing \n
 
-            # create datetime.time objects
-            start = datetime.time(start_HH, start_MM, start_SS, start_mmm*1000)
-            end = datetime.time(end_HH, end_MM, end_SS, end_mmm*1000)
+                # create datetime.time objects
+                start = datetime.time(start_HH, start_MM, start_SS, start_mmm * 1000)
+                end = datetime.time(end_HH, end_MM, end_SS, end_mmm * 1000)
 
-            # append subs
-            self.subs.append(Sub(index, start, end, text))
+                # append subs
+                self.subs.append(Sub(index, start, end, text))
+        except:
+            print('No file found: \"' + self.path + '\"')
+

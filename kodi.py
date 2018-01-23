@@ -47,26 +47,26 @@ class Kodi:
         item = self.get_item()
         type = item['type']
         if type == 'episode':
-            database_type = 'MyVideos'
+            # find name of sql database
+            database_path = os.path.expanduser('~') + '/.kodi/userdata/Database/'
+            files = os.listdir(database_path)
+            for file in files:
+                if 'MyVideos' in file:
+                    database_name = file
+                    break
+            # connect to database
+            database = sqlite3.connect(database_path + database_name)
+            cursor = database.cursor()
+            # query database
+            query = 'SELECT c18 FROM ' + type + ' WHERE id' + type.capitalize() + '=?'
+            id = (str(item['id']),)
+            cursor.execute(query, id)
+            path = cursor.fetchone()[0]
+            return path
         else:
             print('There is no database for this type of media')
             quit()
-        # find name of sql database
-        database_path = os.path.expanduser('~') + '/.kodi/userdata/Database/'
-        files = os.listdir(database_path)
-        for file in files:
-            if database_type in file:
-                database_name = file
-                break
-        # connect to database
-        database = sqlite3.connect(database_path + database_name)
-        cursor = database.cursor()
-        # query database
-        query = 'SELECT c18 FROM ' + type + ' WHERE id' + type.capitalize() + '=?'
-        id = (str(item['id']),)
-        cursor.execute(query, id)
-        path = cursor.fetchone()[0]
-        return path
+
 
     def update_library(self):
         self.request('VideoLibrary.Clean')
