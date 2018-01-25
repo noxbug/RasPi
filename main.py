@@ -1,11 +1,4 @@
-from kodi import *
-from lcd import*
+from kodi import Kodi
 
-kodi = Kodi()
-player=kodi.get_active_players()
-print(player)
-now_playing = kodi.get_item()
-print(now_playing)
-
-
-print('Done!')
+kodi = Kodi('192.168.1.10')
+info = kodi.help('')
