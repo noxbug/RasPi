@@ -1,9 +1,9 @@
 from subtitle import Subtitle
-import sys
+from kodi import Kodi
 
-path = sys.argv[1]
-#path = 'sub.srt'
+kodi = Kodi('192.168.1.10')
+path = kodi.get_path_from_db()
 
-sub = Subtitle()
-sub.open(path)
-sub.translate()
+subtitle = Subtitle()
+subtitle.open(path)
+subtitle.translate()
