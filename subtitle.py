@@ -47,10 +47,10 @@ class Subtitle:
 
 
     def open(self, path):
-        try:
+        if True:
             # open file and read content
             self.path = os.path.splitext(path)[0] + '.srt'
-            file = open(self.path)
+            file = open(self.path, 'r', encoding='iso-8859-1')
             raw_text = file.read()
             file.close()
 
@@ -73,6 +73,6 @@ class Subtitle:
 
                 # append subs
                 self.subs.append(Sub(index, start, end, text))
-        except:
+        else:
             print('No file found: \"' + self.path + '\"')
 
