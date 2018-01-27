@@ -39,10 +39,9 @@ class Kodi:
         else:
             return player[0]
 
-    def set_subtitle(self, sub):
+    def next_subtitle(self):
         player = self.get_active_players()
-        self.request('Player.SetSubtitle', {'playerid': player['playerid'], 'subtitle': sub, 'enable': True})
-        print('kaka')
+        self.request('Player.SetSubtitle', {'playerid': player['playerid'], 'subtitle': 'next', 'enable': True})
 
     def get_item(self):
         player = self.get_active_players()

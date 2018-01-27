@@ -90,5 +90,5 @@ if __name__ == '__main__':
     subtitle.translate()
 
     if sys.argv[1] == '-kodi':
-        kodi.set_subtitle('next')
+        kodi.next_subtitle()
 
