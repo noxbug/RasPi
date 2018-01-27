@@ -2,7 +2,9 @@ import requests
 import sqlite3
 import urllib
 import json
+import sys
 import os
+
 
 class Kodi:
     def __init__(self, host='localhost', port=8080):
@@ -42,7 +44,7 @@ class Kodi:
         item = self.request('Player.GetItem', {'playerid': player['playerid']})
         return item['item']
 
-    def get_path_from_db(self):
+    def get_item_path(self):
         # get item
         item = self.get_item()
         type = item['type']
@@ -67,10 +69,12 @@ class Kodi:
             print('There is no database for this type of media')
             quit()
 
-
     def update_library(self):
         self.request('VideoLibrary.Clean')
         self.request('VideoLibrary.Scan')
 
-
-
+if __name__ == '__main__':
+    if sys.argv[1] == '-update':
+        kodi = Kodi('192.168.1.10')
+        print('updating library ...')
+        kodi.update_library()

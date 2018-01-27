@@ -1,5 +1,7 @@
 from googletrans import Translator
+from kodi import Kodi
 import datetime
+import sys
 import os
 import re
 
@@ -76,3 +78,13 @@ class Subtitle:
         else:
             print('No file found: \"' + self.path + '\"')
 
+if __name__ == '__main__':
+    if sys.argv[1] == '-kodi':
+        kodi = Kodi('192.168.1.10')
+        path = kodi.get_item_path()
+    else:
+        path = sys.argv[1]
+
+    subtitle = Subtitle()
+    subtitle.open(path)
+    subtitle.translate()
