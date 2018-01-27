@@ -88,3 +88,7 @@ if __name__ == '__main__':
     subtitle = Subtitle()
     subtitle.open(path)
     subtitle.translate()
+
+    if sys.argv[1] == '-kodi':
+        kodi.set_subtitle('next')
+
