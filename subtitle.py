@@ -49,7 +49,7 @@ class Subtitle:
 
 
     def open(self, path):
-        if True:
+        try:
             # open file and read content
             self.path = os.path.splitext(path)[0] + '.srt'
             file = open(self.path, 'r', encoding='iso-8859-1')
@@ -75,8 +75,8 @@ class Subtitle:
 
                 # append subs
                 self.subs.append(Sub(index, start, end, text))
-        else:
-            print('No file found: \"' + self.path + '\"')
+        except:
+            print('File not found: \"' + self.path + '\"')
 
 if __name__ == '__main__':
     if sys.argv[1] == '-kodi':
