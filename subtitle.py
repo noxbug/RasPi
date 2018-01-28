@@ -1,5 +1,6 @@
 from googletrans import Translator
 from kodi import Kodi
+from time import sleep
 import datetime
 import sys
 import os
@@ -81,7 +82,8 @@ class Subtitle:
 if __name__ == '__main__':
     if sys.argv[1] == '-kodi':
         kodi = Kodi('192.168.1.10')
-        path = kodi.get_item_path()
+        item = kodi.get_item()
+        path = item['file']
     else:
         path = sys.argv[1]
 
@@ -90,5 +92,6 @@ if __name__ == '__main__':
     subtitle.translate()
 
     if sys.argv[1] == '-kodi':
+        sleep(3)
         kodi.next_subtitle()
 

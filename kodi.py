@@ -1,10 +1,7 @@
 import requests
-import sqlite3
 import urllib
 import json
 import sys
-import os
-
 
 class Kodi:
     def __init__(self, host='localhost', port=8080):
@@ -25,7 +22,7 @@ class Kodi:
             return response['result']
         except:
             print('Error: can not connect to Kodi')
-            quit()
+            return {}
 
     def help(self, method):
         info = self.request('JSONRPC.Introspect', {'filter': {'id': method, 'type': 'method'}})
@@ -33,45 +30,35 @@ class Kodi:
 
     def get_active_players(self):
         player = self.request('Player.GetActivePlayers')
-        if len(player) == 0:
-            print('No active player')
-            quit()
-        else:
+        try:
             return player[0]
+        except:
+            print('No active players')
+            return {}
 
     def next_subtitle(self):
         player = self.get_active_players()
         self.request('Player.SetSubtitle', {'playerid': player['playerid'], 'subtitle': 'next', 'enable': True})
 
     def get_item(self):
-        player = self.get_active_players()
-        item = self.request('Player.GetItem', {'playerid': player['playerid']})
-        return item['item']
+        try:
+            player = self.get_active_players()
+            # item = self.request('Player.GetItem', {'playerid': player['playerid']})
+            item = self.request('Player.GetItem', {'properties': ['title', 'album', 'artist', 'season', 'episode', 'duration', 'showtitle', 'tvshowid', 'thumbnail', 'file', 'fanart', 'streamdetails'], 'playerid': player['playerid']})
+            return item['item']
+        except:
+            print('Can not get item')
+            return {}
 
-    def get_item_path(self):
-        # get item
-        item = self.get_item()
-        type = item['type']
-        if type == 'episode':
-            # find name of sql database
-            database_path = os.path.expanduser('~') + '/.kodi/userdata/Database/'
-            files = os.listdir(database_path)
-            for file in files:
-                if 'MyVideos' in file:
-                    database_name = file
-                    break
-            # connect to database
-            database = sqlite3.connect(database_path + database_name)
-            cursor = database.cursor()
-            # query database
-            query = 'SELECT c18 FROM ' + type + ' WHERE id' + type.capitalize() + '=?'
-            id = (str(item['id']),)
-            cursor.execute(query, id)
-            path = cursor.fetchone()[0]
-            return path
-        else:
-            print('There is no database for this type of media')
-            quit()
+    def get_album_art(self):
+        try:
+            item = self.get_item()
+            album_art = self.request('Files.PrepareDownload', {'path': item['thumbnail']})
+            album_art_url = 'http://' + self.host + ':' + str(self.port) + '/' + album_art['details']['path']
+            return album_art_url
+        except:
+            print('Can not get album art url')
+            return ''
 
     def update_library(self):
         self.request('VideoLibrary.Clean')
