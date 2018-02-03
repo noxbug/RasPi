@@ -1,38 +1,67 @@
+body, html {
+    margin: 0;
+}
+
+/*
 html {
-    /*background-image in html for easy template parsing*/
     background-repeat: no-repeat;
     background-position: center center;
     background-attachement: fixed;
     background-size: cover;
     height: 100%;
     overflow: hidden;
+    filter: blur(20px);
 }
+*/
 
 .container {
+    height: 100%;
+    width: 100%;
+}
+
+.background {
+    background-image: url("ben.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachement: fixed;
+    background-size: cover;
+    overflow: hidden;
+    filter: blur(40px);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index:-1;
+}
+
+#content {
     margin: 0 auto;
+    //text-align: center;
     background: red;
+}
+
+#albumart {
+    width: 70%;
+    margin: 0 auto;
+    background: green;
+}
+
+#albumart img{
+    max-width: 100%;
+    height: auto;
 }
 
 /* Portrait */
 @media screen and (orientation:portrait) {
-    .container {
+    #content {
         width: 90%;
-    }
-
-    .stretch {
-        width: auto;
-        height: 100%;
     }
 }
 /* Landscape */
 @media screen and (orientation:landscape) {
-    .container {
+    #content {
         width: 70%;
-    }
-
-    .stretch {
-        width: 100%;
-        height: auto;
     }
 }
 

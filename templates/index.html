@@ -4,21 +4,28 @@
     <title>kodi web app</title>
     <link href="{{url_for('static', filename='style.css')}}" rel="stylesheet" type="text/css">
     <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <!--
     <style>html {background-image: url("{{album_art}}");}</style>
+    -->
 </head>
 
 <body>
 <div class="container">
+<div class="background"></div>
+<div id="content">
     <h1>{{title}}</h1>
     <h2>{{artist}}</h2>
 
-    <img src="{{album_art}}">
+    <div id="albumart">
+        <img src="{{album_art}}" alt="">
+    </div>
 
     <ul class="player_controls">
         <li><a href="/previous">previous</a></li>
         <li><a href="/play">play</a></li>
         <li><a href="/next">next</a></li>
     </ul>
+</div>
 </div>
 </body>
 </html> 
