@@ -14,12 +14,12 @@ html {
 }
 */
 
-.container {
+#container {
     height: 100%;
     width: 100%;
 }
 
-.background {
+#background {
     background-image: url("ben.jpg");
     background-repeat: no-repeat;
     background-position: center center;
@@ -37,14 +37,14 @@ html {
 
 #content {
     margin: 0 auto;
-    //text-align: center;
-    background: red;
+    text-align: center;
+    //background: red;
 }
 
 #albumart {
     width: 70%;
     margin: 0 auto;
-    background: green;
+    //background: green;
 }
 
 #albumart img{
