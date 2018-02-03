@@ -1,0 +1,38 @@
+html {
+    /*background-image in html for easy template parsing*/
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachement: fixed;
+    background-size: cover;
+    height: 100%;
+    overflow: hidden;
+}
+
+.container {
+    margin: 0 auto;
+    background: red;
+}
+
+/* Portrait */
+@media screen and (orientation:portrait) {
+    .container {
+        width: 90%;
+    }
+
+    .stretch {
+        width: auto;
+        height: 100%;
+    }
+}
+/* Landscape */
+@media screen and (orientation:landscape) {
+    .container {
+        width: 70%;
+    }
+
+    .stretch {
+        width: 100%;
+        height: auto;
+    }
+}
+

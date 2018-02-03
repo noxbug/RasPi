@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 from kodi import Kodi
 
 webapp = Flask(__name__)
@@ -17,8 +17,24 @@ def index():
     except:
         title = 'Nothing playing'
         artist = ''
-        album_art_url = ''
+        album_art_url = '/static/ben.jpg'
     return render_template('index.html', title=title, artist=artist, album_art=album_art_url)
+
+
+@webapp.route('/previous')
+def previous():
+    return redirect(url_for('index'))
+
+
+@webapp.route('/play')
+def play():
+    return redirect(url_for('index'))
+
+
+@webapp.route('/next')
+def next():
+    return redirect(url_for('index'))
+
 
 if __name__ == '__main__':
     webapp.run(debug=True, host='0.0.0.0')
