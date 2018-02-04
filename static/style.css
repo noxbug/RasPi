@@ -44,7 +44,10 @@ body, html {
 
 #content {
     margin: 0 auto;
-    //background: red;
+    height: 100%;
+    display: flex; /* evenly space child divs */
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 /* NOW PLAYING */
@@ -83,18 +86,19 @@ body, html {
     border-radius: 50%; /* make circle */
     text-align: center; /* horizontal-align */
     vertical-align: middle; /* vertical-align */
-    transition: all 0.3s ease; /* add transition for hover effects */
+    //transition: all 3s ease; /* add transition for hover effects */
 }
 
 #player-controls div:hover {
+    //background: radial-gradient(grey, black);
     background-color: grey;
-    opacity: 0.5;
+    opacity: 0.3;
 }
 
 #player-controls i {
     font-size: 2em; /* increase font size */
-    width: 1.7em;
-    line-height: 1.7em; /* needed for vertical-align */
+    width: 1.5em;
+    line-height: 1.5em; /* needed for vertical-align */
     color: white; /* white text color */
 }
 
