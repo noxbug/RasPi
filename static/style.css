@@ -1,32 +1,17 @@
 body, html {
     margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
 }
-
-/*
-html {
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-attachement: fixed;
-    background-size: cover;
-    height: 100%;
-    overflow: hidden;
-    filter: blur(20px);
-}
-*/
 
 #container {
-    height: 100%;
     width: 100%;
+    height: 100vh; /* view height */
+    position: relative;
+    overflow: hidden;
 }
 
-#background {
-    background-image: url("ben.jpg");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-attachement: fixed;
-    background-size: cover;
-    overflow: hidden;
-    filter: blur(40px);
+/* BACKGROUND */
+#background, #gradient {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -35,33 +20,115 @@ html {
     z-index:-1;
 }
 
+#background {
+    //background-image: url("ben.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachement: fixed;
+    background-size: cover;
+    transform: scale(1.5); /* scale figure to remove border filter artifact */
+    filter: blur(10px);
+}
+
+#gradient {
+    background: radial-gradient(grey, black);
+    opacity: 0.3;
+}
+
 #content {
     margin: 0 auto;
-    text-align: center;
     //background: red;
 }
 
-#albumart {
+/* NOW PLAYING */
+#now-playing {
+    width: 100%;
+    margin 0 auto;
+    text-align: center;
+    color: white;
+    //background-color: red;
+}
+
+/* ALBUM ART */
+#album-art {
     width: 70%;
     margin: 0 auto;
     //background: green;
 }
 
-#albumart img{
+
+#album-art img{
     max-width: 100%;
     height: auto;
+    box-shadow: 0px 0px 20px;
 }
 
-/* Portrait */
+/* PLAYER CONTROLS */
+#player-controls {
+    width: 55%;
+    padding: 10px 0;
+    margin: 0 auto; /* center */
+    display: flex; /* evenly spread child divs */
+    justify-content: space-between;
+}
+
+#player-controls div {
+    border-radius: 50%; /* make circle */
+    text-align: center; /* horizontal-align */
+    vertical-align: middle; /* vertical-align */
+    transition: all 0.3s ease; /* add transition for hover effects */
+}
+
+#player-controls div:hover {
+    background-color: grey;
+    opacity: 0.5;
+}
+
+#player-controls i {
+    font-size: 28px; /* increase font size */
+    width: 1.7em;
+    line-height: 1.7em; /* needed for vertical-align */
+    color: white; /* white text color */
+}
+
+
+/* PORTRAIT */
 @media screen and (orientation:portrait) {
     #content {
         width: 90%;
     }
 }
-/* Landscape */
+
+/* LANDSCAPE */
 @media screen and (orientation:landscape) {
     #content {
-        width: 70%;
+        width: 50%;
     }
+}
+
+/* FONTS */
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
 }
 

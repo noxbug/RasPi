@@ -5,7 +5,7 @@ webapp = Flask(__name__)
 
 @webapp.route('/')
 def index():
-    kodi = Kodi('192.168.1.10')
+    global kodi
     item = kodi.get_item()
     try:
         title = item['label']
@@ -16,8 +16,9 @@ def index():
         album_art_url = kodi.get_album_art()
     except:
         title = 'Nothing playing'
-        artist = ''
+        artist = 'unkown'
         album_art_url = '/static/ben.jpg'
+        # album_art_url = ''
     return render_template('index.html', title=title, artist=artist, album_art=album_art_url)
 
 
@@ -34,6 +35,9 @@ def play():
 @webapp.route('/next')
 def next():
     return redirect(url_for('index'))
+
+
+kodi = Kodi('192.168.1.10')
 
 
 if __name__ == '__main__':
