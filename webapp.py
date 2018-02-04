@@ -15,8 +15,8 @@ def index():
             artist = 'unknown'
         album_art_url = kodi.get_album_art()
     except:
-        title = 'Nothing playing'
-        artist = 'unkown'
+        title = 'Nothing Playing'
+        artist = 'Unkown'
         album_art_url = '/static/ben.jpg'
         # album_art_url = ''
     return render_template('index.html', title=title, artist=artist, album_art=album_art_url)

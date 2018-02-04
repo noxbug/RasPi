@@ -53,10 +53,13 @@ body, html {
 /* MENU */
 #menu {
     width: 100%;
-    padding: 10px 0;
+    padding: 0.5em 0; /* top + bottom margin */
     margin: 0 auto; /* center */
     display: flex; /* flex right */
     justify-content: flex-end;
+
+    //position: relative;
+    //display: inline-block;
 }
 
 /* NOW PLAYING */
@@ -85,7 +88,7 @@ body, html {
 /* PLAYER CONTROLS */
 #player-controls {
     width: 55%;
-    padding: 20px 0;
+    padding: 0 0 2em 0; /* top right bottom left */
     margin: 0 auto; /* center */
     display: flex; /* evenly spread child divs */
     justify-content: space-between;
@@ -96,7 +99,12 @@ body, html {
     border-radius: 50%; /* make circle */
     text-align: center; /* horizontal-align */
     vertical-align: middle; /* vertical-align */
-    //transition: all 3s ease; /* add transition for hover effects */
+    background-color: transparent;
+    border: none;
+    color: white;
+    padding: 0;
+    display: inline-block;
+    cursor: pointer;
 }
 
 #button:hover {
