@@ -50,6 +50,15 @@ body, html {
     justify-content: space-between;
 }
 
+/* MENU */
+#menu {
+    width: 100%;
+    padding: 10px 0;
+    margin: 0 auto; /* center */
+    display: flex; /* flex right */
+    justify-content: flex-end;
+}
+
 /* NOW PLAYING */
 #now-playing {
     width: 100%;
@@ -61,14 +70,14 @@ body, html {
 
 /* ALBUM ART */
 #album-art {
-    width: 70%;
+    width: 80%;
     margin: 0 auto;
     //background: green;
 }
 
 
 #album-art img{
-    max-width: 100%;
+    width: 100%;
     height: auto;
     box-shadow: 0px 0px 20px;
 }
@@ -76,26 +85,27 @@ body, html {
 /* PLAYER CONTROLS */
 #player-controls {
     width: 55%;
-    padding: 10px 0;
+    padding: 20px 0;
     margin: 0 auto; /* center */
     display: flex; /* evenly spread child divs */
     justify-content: space-between;
 }
 
-#player-controls div {
+/* BUTTON */
+#button {
     border-radius: 50%; /* make circle */
     text-align: center; /* horizontal-align */
     vertical-align: middle; /* vertical-align */
     //transition: all 3s ease; /* add transition for hover effects */
 }
 
-#player-controls div:hover {
+#button:hover {
     //background: radial-gradient(grey, black);
     background-color: grey;
     opacity: 0.3;
 }
 
-#player-controls i {
+#button i {
     font-size: 2em; /* increase font size */
     width: 1.5em;
     line-height: 1.5em; /* needed for vertical-align */
@@ -106,7 +116,7 @@ body, html {
 /* PORTRAIT */
 @media screen and (orientation:portrait) {
     #content {
-        width: 90%;
+        width: 80%;
     }
 }
 
