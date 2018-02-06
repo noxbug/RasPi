@@ -1,3 +1,5 @@
+from subtitle import Subtitle
+from time import sleep
 import requests
 import urllib
 import json
@@ -36,10 +38,6 @@ class Kodi:
             print('No active players')
             return {}
 
-    def next_subtitle(self):
-        player = self.get_active_players()
-        self.request('Player.SetSubtitle', {'playerid': player['playerid'], 'subtitle': 'next', 'enable': True})
-
     def get_item(self):
         try:
             player = self.get_active_players()
@@ -49,6 +47,33 @@ class Kodi:
         except:
             print('Can not get item')
             return {}
+
+    def play_pause(self):
+        try:
+            player = self.get_active_players()
+            status = self.request('Player.PlayPause', {'playerid': player['playerid']})
+            play = bool(status['speed'])
+            return play
+        except:
+            print('Nothing playing')
+            return {}
+
+    def fast_forward(self):
+        try:
+            player = self.get_active_players()
+            position = self.request('Player.Seek', {'playerid': player['playerid'], 'value': 'smallforward'})
+            return position
+        except:
+            return {}
+
+    def fast_rewind(self):
+        try:
+            player = self.get_active_players()
+            position = self.request('Player.Seek', {'playerid': player['playerid'], 'value': 'smallbackward'})
+            return position
+        except:
+            return {}
+
 
     def get_album_art(self):
         try:
@@ -63,6 +88,21 @@ class Kodi:
     def update_library(self):
         self.request('VideoLibrary.Clean')
         self.request('VideoLibrary.Scan')
+
+    def translate_subtitle(self):
+        try:
+            item = self.get_item()
+            subtitle = Subtitle()
+            subtitle.open(item['file'])
+            subtitle.translate()
+            sleep(3)
+            self.update_library()
+        except:
+            pass
+
+    def next_subtitle(self):
+        player = self.get_active_players()
+        self.request('Player.SetSubtitle', {'playerid': player['playerid'], 'subtitle': 'next', 'enable': True})
 
 if __name__ == '__main__':
     if sys.argv[1] == '-update':

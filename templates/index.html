@@ -15,12 +15,19 @@
 
 <div id="content">
     <div id="menu">
-        <button id="button"><a href="/previous"><i class="material-icons">more_vert</i></a></button>
+        <div class="dropdown">
+            <button class="button"><i class="material-icons">more_vert</i></button>
+            <div class="dropdown-content">
+                <a href="{{url_for('translate_sub')}}">Translate subtitle</a>
+                <a href="{{url_for('next_sub')}}">Next subtitle</a>
+                <a href="{{url_for('update')}}">Update library</a>
+            </div>
+        </div>
     </div>
 
 
     <div id="album-art">
-        <img src="{{album_art}}" alt="">
+        <a href="{{url_for('index')}}"><img src="{{album_art}}" alt=""></a>
     </div>
 
 
@@ -31,9 +38,15 @@
 
 
     <div id="player-controls">
-        <button id="button"><a href="/previous"><i class="material-icons">fast_rewind</i></a></button>
-        <button id="button"><a href="/play"><i class="material-icons">play_arrow</i></a></button>
-        <button id="button"><a href="/next"><i class="material-icons">fast_forward</i></a></button>
+        <button class="button"><a href="/previous"><i class="material-icons">fast_rewind</i></a></button>
+        <button class="button"><a href="{{url_for('play')}}">
+            {% if play == True %}
+            <i class="material-icons">pause</i>
+            {% else %}
+            <i class="material-icons">play_arrow</i>
+            {% endif %}
+        </a></button>
+        <button class="button"><a href="/next"><i class="material-icons">fast_forward</i></a></button>
     </div>
 
 
