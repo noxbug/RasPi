@@ -1,0 +1,14 @@
+{
+  "short_name": "Kodi Web App",
+  "name": "Kodi Web App ++",
+  "icons": [
+    {
+      "src": "kodi.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "../index.html",
+  "display": "fullscreen",
+  "orientation": "portrait"
+}

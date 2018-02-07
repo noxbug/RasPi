@@ -10,7 +10,9 @@ play = False
 def index():
     global kodi
     global play
-    try:
+
+    player = kodi.get_active_players()
+    if len(player) != 0:
         item = kodi.get_item()
         title = item['label']
         if item['type'] == 'episode':
@@ -18,7 +20,7 @@ def index():
         else:
             artist = item['showtitle']
         album_art_url = kodi.get_album_art()
-    except:
+    else:
         title = 'Nothing Playing'
         artist = 'Unkown'
         album_art_url = '/static/ben.jpg'
@@ -38,6 +40,12 @@ def play():
         play = kodi.play_pause()
     except:
         play = False
+    return redirect(url_for('index'))
+
+@webapp.route('/stop')
+def stop():
+    global kodi
+    kodi.stop()
     return redirect(url_for('index'))
 
 @webapp.route('/next')

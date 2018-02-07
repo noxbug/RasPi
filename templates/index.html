@@ -4,6 +4,7 @@
     <title>kodi web app</title>
     <meta name="viewport" content="width-device-width, initial-scale=1.0">
     <link href="{{url_for('static', filename='style.css')}}" rel="stylesheet" type="text/css">
+    <link rel="manifest" href="/manifest.json">
     <style>#background {background-image: url("{{album_art}}");}</style>
 
 </head>
@@ -36,9 +37,13 @@
         <h2>{{artist}}</h2>
     </div>
 
+    <div id="progress-bar">
+        <div id="progress-indicator"></div>
+    </div>
+
 
     <div id="player-controls">
-        <button class="button"><a href="/previous"><i class="material-icons">fast_rewind</i></a></button>
+        <button class="button"><a href="{{url_for('previous')}}"><i class="material-icons">fast_rewind</i></a></button>
         <button class="button"><a href="{{url_for('play')}}">
             {% if play == True %}
             <i class="material-icons">pause</i>
@@ -46,7 +51,8 @@
             <i class="material-icons">play_arrow</i>
             {% endif %}
         </a></button>
-        <button class="button"><a href="/next"><i class="material-icons">fast_forward</i></a></button>
+        <button class="button"><a href="{{url_for('stop')}}"><i class="material-icons">stop</i></a></button>
+        <button class="button"><a href="{{url_for('next')}}"><i class="material-icons">fast_forward</i></a></button>
     </div>
 
 

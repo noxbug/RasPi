@@ -13,10 +13,10 @@ class Kodi:
         self.url = 'http://' + host + ":" + str(port) + '/jsonrpc'
 
     def request(self, method, params={}, id=1):
-        payload = {'jsonrpc': '2.0', 'method': method, 'params': params, 'id': id}
-        # convert payload to json object and parse as url
-        url_param = urllib.parse.urlencode({'request': json.dumps(payload)})
         try:
+            payload = {'jsonrpc': '2.0', 'method': method, 'params': params, 'id': id}
+            # convert payload to json object and parse as url
+            url_param = urllib.parse.urlencode({'request': json.dumps(payload)})
             # contact server
             json_response = requests.get(self.url + '?' + url_param, headers=self.headers)
             # json object to python
@@ -31,8 +31,8 @@ class Kodi:
         return info
 
     def get_active_players(self):
-        player = self.request('Player.GetActivePlayers')
         try:
+            player = self.request('Player.GetActivePlayers')
             return player[0]
         except:
             print('No active players')
@@ -40,9 +40,9 @@ class Kodi:
 
     def get_item(self):
         try:
-            player = self.get_active_players()
-            # item = self.request('Player.GetItem', {'playerid': player['playerid']})
-            item = self.request('Player.GetItem', {'properties': ['title', 'album', 'artist', 'season', 'episode', 'duration', 'showtitle', 'tvshowid', 'thumbnail', 'file', 'fanart', 'streamdetails'], 'playerid': player['playerid']})
+            # player = self.get_active_players()
+            # item = self.request('Player.GetItem', {'properties': ['title', 'album', 'artist', 'season', 'episode', 'duration', 'showtitle', 'tvshowid', 'thumbnail', 'file', 'fanart', 'streamdetails'], 'playerid': player['playerid']})
+            item = self.request('Player.GetItem', {'properties': ['title', 'album', 'artist', 'season', 'episode', 'duration', 'showtitle', 'tvshowid', 'thumbnail', 'file', 'fanart', 'streamdetails'], 'playerid': 1})
             return item['item']
         except:
             print('Can not get item')
@@ -50,26 +50,37 @@ class Kodi:
 
     def play_pause(self):
         try:
-            player = self.get_active_players()
-            status = self.request('Player.PlayPause', {'playerid': player['playerid']})
+            # player = self.get_active_players()
+            # status = self.request('Player.PlayPause', {'playerid': player['playerid']})
+            status = self.request('Player.PlayPause', {'playerid': 1})
             play = bool(status['speed'])
             return play
         except:
             print('Nothing playing')
-            return {}
+            return False
+
+    def stop(self):
+        try:
+            # player = self.get_active_players()
+            # self.request('Player.Stop', {'playerid': player['playerid']})
+            self.request('Player.Stop', {'playerid': 1})
+        except:
+            pass
 
     def fast_forward(self):
         try:
-            player = self.get_active_players()
-            position = self.request('Player.Seek', {'playerid': player['playerid'], 'value': 'smallforward'})
+            # player = self.get_active_players()
+            # position = self.request('Player.Seek', {'playerid': player['playerid'], 'value': 'smallforward'})
+            position = self.request('Player.Seek', {'playerid': 1, 'value': 'smallforward'})
             return position
         except:
             return {}
 
     def fast_rewind(self):
         try:
-            player = self.get_active_players()
-            position = self.request('Player.Seek', {'playerid': player['playerid'], 'value': 'smallbackward'})
+            # player = self.get_active_players()
+            # position = self.request('Player.Seek', {'playerid': player['playerid'], 'value': 'smallbackward'})
+            position = self.request('Player.Seek', {'playerid': 1, 'value': 'smallbackward'})
             return position
         except:
             return {}
@@ -96,13 +107,18 @@ class Kodi:
             subtitle.open(item['file'])
             subtitle.translate()
             sleep(3)
-            self.update_library()
+            self.next_subtitle()
         except:
+            print('Translation failed')
             pass
 
     def next_subtitle(self):
-        player = self.get_active_players()
-        self.request('Player.SetSubtitle', {'playerid': player['playerid'], 'subtitle': 'next', 'enable': True})
+        try:
+            # player = self.get_active_players()
+            # self.request('Player.SetSubtitle', {'playerid': player['playerid'], 'subtitle': 'next', 'enable': True})
+            self.request('Player.SetSubtitle', {'playerid': 1, 'subtitle': 'next', 'enable': True})
+        except:
+            print('No subtitle found')
 
 if __name__ == '__main__':
     if sys.argv[1] == '-update':
