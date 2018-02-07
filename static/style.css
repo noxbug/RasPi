@@ -126,7 +126,7 @@ body, html {
     margin: 0 auto;
     overflow: hidden;
     border-radius: 0.15em;
-
+    visibility: hidden;
 }
 
 #progress-indicator {
@@ -140,7 +140,8 @@ body, html {
 
 /* PLAYER CONTROLS */
 #player-controls {
-    width: 55%;
+    //width: 55%;
+    width: 70%
     padding: 0 0 2em 0; /* top right bottom left */
     margin: 0 auto; /* center */
     display: flex; /* evenly spread child divs */
