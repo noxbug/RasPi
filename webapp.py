@@ -1,58 +1,74 @@
 from flask import Flask, render_template, redirect, url_for
 from kodi import Kodi
 
+
+class Now_playing:
+    def __init__(self):
+        self.title = 'Nothing Playing'
+        self.artist = 'Unkown'
+        self.album_art = '/static/ben.jpg'
+        self.play = False
+        self.position = 0
+
 app = Flask(__name__)
 
 kodi = Kodi('192.168.1.10')
-play = False
+now_playing = Now_playing()
 
 @app.route('/')
 @app.route('/index')
 def index():
     global kodi
-    global play
+    global now_playing
 
-    player = kodi.get_active_players()
+    player = kodi.active_player()
     if len(player) != 0:
-        item = kodi.get_item()
-        title = item['label']
+        item = kodi.item()
+        now_playing.title = item['label']
         if item['type'] == 'episode':
-            artist = item['showtitle']
+            now_playing.artist = item['showtitle']
         else:
-            artist = item['showtitle']
-        album_art_url = kodi.get_album_art()
+            now_playing.artist = item['showtitle']
+        now_playing.album_art = kodi.album_art()
     else:
-        title = 'Nothing Playing'
-        artist = 'Unkown'
-        album_art_url = '/static/ben.jpg'
-    return render_template('now_playing.html', title=title, artist=artist, album_art=album_art_url, play=play)
-
-@app.route('/previous')
-def previous():
-    global kodi
-    kodi.fast_rewind()
-    return redirect(url_for('index'))
+        now_playing.title = 'Nothing Playing'
+        now_playing.artist = 'Unkown'
+        now_playing.album_art = '/static/ben.jpg'
+    return render_template('now_playing.html', now_playing=now_playing)
 
 @app.route('/play')
 def play():
     global kodi
-    global play
+    global now_playing
     try:
-        play = kodi.play_pause()
+        now_playing.play = kodi.play_pause()
+        now_playing.position = kodi.position()['percentage']
     except:
-        play = False
+        now_playing.play = False
+        now_playing.position = 0
     return redirect(url_for('index'))
 
 @app.route('/stop')
 def stop():
     global kodi
+    global now_playing
     kodi.stop()
+    now_playing.play = False
+    now_playing.position = 0
     return redirect(url_for('index'))
 
 @app.route('/next')
 def next():
     global kodi
-    kodi.fast_forward()
+    global now_playing
+    now_playing.position = kodi.fast_forward()['percentage']
+    return redirect(url_for('index'))
+
+@app.route('/previous')
+def previous():
+    global kodi
+    global now_playing
+    now_playing.position = kodi.fast_rewind()['percentage']
     return redirect(url_for('index'))
 
 @app.route('/translate_sub')

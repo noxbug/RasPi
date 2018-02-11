@@ -131,7 +131,6 @@ body, html {
 }
 
 #progress-indicator {
-    width: 50%;
     opacity: 1;
     min-height: 0.3em;
     background: white;

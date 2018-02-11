@@ -30,7 +30,7 @@ class Kodi:
         info = self.request('JSONRPC.Introspect', {'filter': {'id': method, 'type': 'method'}})
         return info
 
-    def get_active_players(self):
+    def active_player(self):
         try:
             player = self.request('Player.GetActivePlayers')
             return player[0]
@@ -38,9 +38,9 @@ class Kodi:
             print('No active players')
             return {}
 
-    def get_item(self):
+    def item(self):
         try:
-            # player = self.get_active_players()
+            # player = self.active_players()
             # item = self.request('Player.GetItem', {'properties': ['title', 'album', 'artist', 'season', 'episode', 'duration', 'showtitle', 'tvshowid', 'thumbnail', 'file', 'fanart', 'streamdetails'], 'playerid': player['playerid']})
             item = self.request('Player.GetItem', {'properties': ['title', 'album', 'artist', 'season', 'episode', 'duration', 'showtitle', 'tvshowid', 'thumbnail', 'file', 'fanart', 'streamdetails'], 'playerid': 1})
             return item['item']
@@ -50,7 +50,7 @@ class Kodi:
 
     def play_pause(self):
         try:
-            # player = self.get_active_players()
+            # player = self.active_players()
             # status = self.request('Player.PlayPause', {'playerid': player['playerid']})
             status = self.request('Player.PlayPause', {'playerid': 1})
             play = bool(status['speed'])
@@ -61,15 +61,22 @@ class Kodi:
 
     def stop(self):
         try:
-            # player = self.get_active_players()
+            # player = self.active_players()
             # self.request('Player.Stop', {'playerid': player['playerid']})
             self.request('Player.Stop', {'playerid': 1})
         except:
             pass
 
+    def position(self):
+        try:
+            position = self.request('Player.GetProperties', {'playerid': 1, 'properties': ['percentage']})
+            return position
+        except:
+            return {}
+
     def fast_forward(self):
         try:
-            # player = self.get_active_players()
+            # player = self.active_players()
             # position = self.request('Player.Seek', {'playerid': player['playerid'], 'value': 'smallforward'})
             position = self.request('Player.Seek', {'playerid': 1, 'value': 'smallforward'})
             return position
@@ -78,17 +85,16 @@ class Kodi:
 
     def fast_rewind(self):
         try:
-            # player = self.get_active_players()
+            # player = self.active_players()
             # position = self.request('Player.Seek', {'playerid': player['playerid'], 'value': 'smallbackward'})
             position = self.request('Player.Seek', {'playerid': 1, 'value': 'smallbackward'})
             return position
         except:
             return {}
 
-
-    def get_album_art(self):
+    def album_art(self):
         try:
-            item = self.get_item()
+            item = self.item()
             album_art = self.request('Files.PrepareDownload', {'path': item['thumbnail']})
             album_art_url = 'http://' + self.host + ':' + str(self.port) + '/' + album_art['details']['path']
             return album_art_url
@@ -102,7 +108,7 @@ class Kodi:
 
     def translate_subtitle(self):
         try:
-            item = self.get_item()
+            item = self.item()
             subtitle = Subtitle()
             subtitle.open(item['file'])
             subtitle.translate()
@@ -114,7 +120,7 @@ class Kodi:
 
     def next_subtitle(self):
         try:
-            # player = self.get_active_players()
+            # player = self.active_players()
             # self.request('Player.SetSubtitle', {'playerid': player['playerid'], 'subtitle': 'next', 'enable': True})
             self.request('Player.SetSubtitle', {'playerid': 1, 'subtitle': 'next', 'enable': True})
         except:

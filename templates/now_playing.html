@@ -11,25 +11,27 @@
 {% block content %}
 
 <div id="album-art">
-    <a href="{{url_for('index')}}"><img src="{{album_art}}" alt=""></a>
+    <a href="{{url_for('index')}}"><img src="{{now_playing.album_art}}" alt=""></a>
 </div>
 
 
 <div id="now-playing">
-    <h1>{{title}}</h1>
-    <h2>{{artist}}</h2>
+    <h1>{{now_playing.title}}</h1>
+    <h2>{{now_playing.artist}}</h2>
 </div>
 
 <div id="progress-bar">
     <div id="progress-indicator"></div>
+    <style>#progress-indicator {width: {{now_playing.position}}%;}</style>
 </div>
 
 
 <div id="player-controls">
     <button class="button"><a href="{{url_for('previous')}}"><i class="material-icons">fast_rewind</i></a></button>
     <button class="button"><a href="{{url_for('play')}}">
-        {% if play == True %}
+        {% if now_playing.play == True %}
         <i class="material-icons">pause</i>
+        <style>#progress-bar {visibility: hidden;}</style>
         {% else %}
         <i class="material-icons">play_arrow</i>
         {% endif %}
