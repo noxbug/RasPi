@@ -10,6 +10,9 @@ class Now_playing:
         self.play = False
         self.position = 0
 
+    def reset(self):
+        self.__init__()
+
 app = Flask(__name__)
 
 kodi = Kodi('192.168.1.10')
@@ -31,9 +34,7 @@ def index():
             now_playing.artist = item['showtitle']
         now_playing.album_art = kodi.album_art()
     else:
-        now_playing.title = 'Nothing Playing'
-        now_playing.artist = 'Unkown'
-        now_playing.album_art = '/static/ben.jpg'
+        now_playing.reset()
     return render_template('now_playing.html', now_playing=now_playing)
 
 @app.route('/play')
@@ -44,8 +45,7 @@ def play():
         now_playing.play = kodi.play_pause()
         now_playing.position = kodi.position()['percentage']
     except:
-        now_playing.play = False
-        now_playing.position = 0
+        now_playing.reset()
     return redirect(url_for('index'))
 
 @app.route('/stop')
@@ -53,8 +53,7 @@ def stop():
     global kodi
     global now_playing
     kodi.stop()
-    now_playing.play = False
-    now_playing.position = 0
+    now_playing.reset()
     return redirect(url_for('index'))
 
 @app.route('/next')
@@ -64,8 +63,7 @@ def next():
     try:
         now_playing.position = kodi.fast_forward()['percentage']
     except:
-        now_playing.play = False
-        now_playing.position = 0
+        now_playing.reset()
     return redirect(url_for('index'))
 
 @app.route('/previous')
@@ -75,8 +73,7 @@ def previous():
     try:
         now_playing.position = kodi.fast_rewind()['percentage']
     except:
-        now_playing.play = False
-        now_playing.position = 0
+        now_playing.reset()
     return redirect(url_for('index'))
 
 @app.route('/translate_sub')
