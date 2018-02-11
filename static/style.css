@@ -60,7 +60,8 @@ body, html {
     padding: 0.5em 0; /* top + bottom margin */
     margin: 0 auto; /* center */
     display: flex; /* flex right */
-    justify-content: flex-end;
+    //justify-content: flex-end;
+    justify-content: space-between;
 }
 
 /* DROP DOWN */
@@ -125,17 +126,15 @@ body, html {
     width: 75%;
     margin: 0 auto;
     overflow: hidden;
-    border-radius: 0.15em;
-    visibility: hidden;
+    background: grey;
+    //visibility: hidden;
 }
 
 #progress-indicator {
     width: 50%;
-    min-height: 0.3em;
-    //min-height: 1em;
-    //background: linear-gradient(black, grey, black);
-    background: red;
     opacity: 1;
+    min-height: 0.3em;
+    background: white;
 }
 
 /* PLAYER CONTROLS */
