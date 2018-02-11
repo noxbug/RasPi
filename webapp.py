@@ -61,14 +61,22 @@ def stop():
 def next():
     global kodi
     global now_playing
-    now_playing.position = kodi.fast_forward()['percentage']
+    try:
+        now_playing.position = kodi.fast_forward()['percentage']
+    except:
+        now_playing.play = False
+        now_playing.position = 0
     return redirect(url_for('index'))
 
 @app.route('/previous')
 def previous():
     global kodi
     global now_playing
-    now_playing.position = kodi.fast_rewind()['percentage']
+    try:
+        now_playing.position = kodi.fast_rewind()['percentage']
+    except:
+        now_playing.play = False
+        now_playing.position = 0
     return redirect(url_for('index'))
 
 @app.route('/translate_sub')
