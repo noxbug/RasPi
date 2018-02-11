@@ -40,8 +40,6 @@ class Kodi:
 
     def item(self):
         try:
-            # player = self.active_players()
-            # item = self.request('Player.GetItem', {'properties': ['title', 'album', 'artist', 'season', 'episode', 'duration', 'showtitle', 'tvshowid', 'thumbnail', 'file', 'fanart', 'streamdetails'], 'playerid': player['playerid']})
             item = self.request('Player.GetItem', {'properties': ['title', 'album', 'artist', 'season', 'episode', 'duration', 'showtitle', 'tvshowid', 'thumbnail', 'file', 'fanart', 'streamdetails'], 'playerid': 1})
             return item['item']
         except:
@@ -50,8 +48,6 @@ class Kodi:
 
     def play_pause(self):
         try:
-            # player = self.active_players()
-            # status = self.request('Player.PlayPause', {'playerid': player['playerid']})
             status = self.request('Player.PlayPause', {'playerid': 1})
             play = bool(status['speed'])
             return play
@@ -61,8 +57,6 @@ class Kodi:
 
     def stop(self):
         try:
-            # player = self.active_players()
-            # self.request('Player.Stop', {'playerid': player['playerid']})
             self.request('Player.Stop', {'playerid': 1})
         except:
             pass
@@ -76,8 +70,6 @@ class Kodi:
 
     def fast_forward(self):
         try:
-            # player = self.active_players()
-            # position = self.request('Player.Seek', {'playerid': player['playerid'], 'value': 'smallforward'})
             position = self.request('Player.Seek', {'playerid': 1, 'value': 'smallforward'})
             return position
         except:
@@ -85,8 +77,6 @@ class Kodi:
 
     def fast_rewind(self):
         try:
-            # player = self.active_players()
-            # position = self.request('Player.Seek', {'playerid': player['playerid'], 'value': 'smallbackward'})
             position = self.request('Player.Seek', {'playerid': 1, 'value': 'smallbackward'})
             return position
         except:
@@ -120,8 +110,6 @@ class Kodi:
 
     def next_subtitle(self):
         try:
-            # player = self.active_players()
-            # self.request('Player.SetSubtitle', {'playerid': player['playerid'], 'subtitle': 'next', 'enable': True})
             self.request('Player.SetSubtitle', {'playerid': 1, 'subtitle': 'next', 'enable': True})
         except:
             print('No subtitle found')

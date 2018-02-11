@@ -31,9 +31,11 @@
     <button class="button"><a href="{{url_for('play')}}">
         {% if now_playing.play == True %}
         <i class="material-icons">pause</i>
-        <style>#progress-bar {visibility: hidden;}</style>
         {% else %}
         <i class="material-icons">play_arrow</i>
+            {% if now_playing.position > 0 %}
+            <style>#progress-bar {visibility: visible;}</style>
+            {% endif %}
         {% endif %}
     </a></button>
     <button class="button"><a href="{{url_for('stop')}}"><i class="material-icons">stop</i></a></button>

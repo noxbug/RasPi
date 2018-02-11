@@ -32,7 +32,6 @@ body, html {
 }
 
 #background {
-    //background-image: url("ben.jpg");
     background-repeat: no-repeat;
     background-position: center center;
     background-attachement: fixed;
@@ -127,12 +126,12 @@ body, html {
     margin: 0 auto;
     overflow: hidden;
     background: grey;
-    //visibility: hidden;
+    visibility: hidden;
 }
 
 #progress-indicator {
     opacity: 1;
-    min-height: 0.3em;
+    min-height: 0.2em;
     background: white;
 }
 
