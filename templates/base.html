@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>kodi web app</title>
+    <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <link href="{{url_for('static', filename='style.css')}}" rel="stylesheet" type="text/css">
+    <link rel="manifest" href="/static/manifest.json">
+    <style>#background {background-image: url("{{album_art}}");}</style>
+</head>
+
+<body>
+<div id="container">
+<div id="background"></div>
+<div id="gradient"></div>
+
+<div id="content">
+    <div id="menu">
+        <div class="dropdown">
+            <button class="button"><i class="material-icons">more_vert</i></button>
+            <div class="dropdown-content">
+                <a href="{{url_for('translate_sub')}}">Translate subtitle</a>
+                <a href="{{url_for('next_sub')}}">Next subtitle</a>
+                <a href="{{url_for('update')}}">Update library</a>
+            </div>
+        </div>
+    </div>
+
+    {% block content %}
+    {% endblock %}
+</div>
+</div>
+</body>
+</html>
