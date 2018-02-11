@@ -76,6 +76,10 @@ def previous():
         now_playing.reset()
     return redirect(url_for('index'))
 
+@app.route('/remote')
+def remote():
+    return render_template('remote.html', now_playing=now_playing)
+
 @app.route('/translate_sub')
 def translate_sub():
     global kodi

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block menu %}
+<button class="button"><a href="{{url_for('index')}}"><i class="material-icons">clear</i></a></button>
+{% endblock %}
+
+
+
+{% block content %}
+
+<div id="remote">
+    <div>
+        <p></p>
+        <button class="button"><i class="material-icons">keyboard_arrow_up</i></button>
+        <p></p>
+    </div>
+    <div>
+        <button class="button"><i class="material-icons">keyboard_arrow_left</i></button>
+        <button class="button"><i class="material-icons">crop_square</i></button>
+        <button class="button"><i class="material-icons">keyboard_arrow_right</i></button>
+    </div>
+    <div>
+        <p></p>
+        <button class="button"><i class="material-icons">keyboard_arrow_down</i></button>
+        <p></p>
+    </div>
+</div>
+
+<div id="bottom-bar">
+    <button class="button"><i class="material-icons">arrow_back</i></button>
+    <button class="button"><i class="material-icons">info_outline</i></button>
+    <button class="button"><i class="material-icons">comment</i></button>
+
+</div>
+
+{% endblock %}

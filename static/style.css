@@ -6,6 +6,7 @@ h5 { font-size: .83em; }
 h6 { font-size: .75em; }
 
 h1, h2, h3, h4, h5, h6, p, i {
+    color: white;
     text-shadow: 0px 0px 5px rgba(0,0,0,0.3);
 }
 
@@ -55,6 +56,16 @@ body, html {
 
 /* MENU */
 #menu {
+    width: 100%;
+    padding: 0.5em 0; /* top + bottom margin */
+    margin: 0 auto; /* center */
+    display: flex; /* flex right */
+    //justify-content: flex-end;
+    justify-content: space-between;
+}
+
+/* BOTTOM BAR */
+#bottom-bar {
     width: 100%;
     padding: 0.5em 0; /* top + bottom margin */
     margin: 0 auto; /* center */
@@ -133,6 +144,23 @@ body, html {
     opacity: 1;
     min-height: 0.2em;
     background: white;
+}
+
+/* REMOTE */
+#remote {
+    width: 15em;
+    height: 15em;
+    margin: 0 auto;
+    //background: red;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#remote div {
+    width: 100%;
+    display: flex; /* evenly spread child divs */
+    justify-content: space-between;
 }
 
 /* PLAYER CONTROLS */
