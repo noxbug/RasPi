@@ -1,0 +1,50 @@
+{
+    "12": {
+        "controller": "A",
+        "keybaord": "KEY_D"
+    },
+    "13": {
+        "controller": "DOWN",
+        "keyboard": "KEY_S"
+    },
+    "16": {
+        "controller": "B",
+        "keybaord": "KEY_D"
+    },
+    "17": {
+        "controller": "R1",
+        "keybaord": "KEY_D"
+    },
+    "19": {
+        "controller": "LEFT",
+        "keybaord": "KEY_A"
+    },
+    "20": {
+        "controller": "X",
+        "keybaord": "KEY_D"
+    },
+    "21": {
+        "controller": "Y",
+        "keybaord": "KEY_D"
+    },
+    "22": {
+        "controller": "START",
+        "keybaord": "KEY_D"
+    },
+    "23": {
+        "controller": "SELECT",
+        "keybaord": "KEY_D"
+    },
+    "26": {
+        "controller": "RIGHT",
+        "keybaord": "KEY_D"
+    },
+    "27": {
+        "controller": "L1",
+        "keybaord": "KEY_D"
+    },
+    "6": {
+        "controller": "UP",
+        "keyboard": "KEY_W"
+    }
+}
