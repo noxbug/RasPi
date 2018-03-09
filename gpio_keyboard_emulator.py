@@ -27,18 +27,18 @@ try:
         keymap = json.load(fid)
 except:
     print('Oops something went wrong! Load default keymap configuration')
-    keymap =   {'13':{'controller': 'UP',     'keyboard': 'W'},
-                '19':{'controller': 'DOWN',   'keyboard': 'S'},
-                 '6':{'controller': 'LEFT',   'keyboard': 'A'},
-                '26':{'controller': 'RIGHT',  'keyboard': 'D'},
-                '12':{'controller': 'A',      'keyboard': 'K'},
-                '16':{'controller': 'B',      'keyboard': 'D'},
-                '20':{'controller': 'X',      'keyboard': 'D'},
-                '21':{'controller': 'Y',      'keyboard': 'D'},
-                '23':{'controller': 'SELECT', 'keyboard': 'D'},
-                '22':{'controller': 'START',  'keyboard': 'D'},
-                '27':{'controller': 'L1',     'keyboard': 'D'},
-                '17':{'controller': 'R1',     'keyboard': 'D'}}
+    keymap =   {'13':{'controller': 'UP',     'keyboard': 'U'},
+                '19':{'controller': 'DOWN',   'keyboard': 'D'},
+                 '6':{'controller': 'LEFT',   'keyboard': 'L'},
+                '26':{'controller': 'RIGHT',  'keyboard': 'R'},
+                '12':{'controller': 'A',      'keyboard': 'A'},
+                '16':{'controller': 'B',      'keyboard': 'B'},
+                '20':{'controller': 'X',      'keyboard': 'X'},
+                '21':{'controller': 'Y',      'keyboard': 'Y'},
+                '23':{'controller': 'SELECT', 'keyboard': 'SPACE'},
+                '22':{'controller': 'START',  'keyboard': 'ENTER'},
+                '27':{'controller': 'L1',     'keyboard': 'E'},
+                '17':{'controller': 'R1',     'keyboard': 'I'}}
 
 # save keymap
 with open('keymap.json', 'w') as fid:
