@@ -3,6 +3,7 @@ import pigpio
 import signal
 import time
 import json
+import os
 import uinput
 
 # load uinput kernel module
@@ -21,9 +22,14 @@ except:
 # create pigpio instance
 gpio = pigpio.pi()
 
+# construct path to keymap file
+script_path = os.path.abspath(__file__)
+script_dir = os.path.split(script_path)[0]
+keymap_path = os.path.join(script_dir, 'keymap.json')
+
 # load keymap configuration
 try:
-    with open('keymap.json') as fid:
+    with open(keymap_path) as fid:
         keymap = json.load(fid)
 except:
     print('Oops something went wrong! Load default keymap configuration')
@@ -41,7 +47,7 @@ except:
                 '17':{'controller': 'R1',     'keyboard': 'I'}}
 
 # save keymap
-with open('keymap.json', 'w') as fid:
+with open(keymap_path, 'w') as fid:
     json.dump(keymap, fid, indent=4, sort_keys=True, ensure_ascii=False)
 
 # parse keymap for faster indexing
