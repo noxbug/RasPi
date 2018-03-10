@@ -1,13 +1,10 @@
+from evdev import UInput, ecodes as e
 import subprocess
 import pigpio
 import signal
 import time
 import json
 import os
-import uinput
-
-# load uinput kernel module
-subprocess.call(['sudo', '-i', 'modprobe', 'uinput'])
 
 try:
     # check if pigpio daemon running
@@ -26,10 +23,11 @@ gpio = pigpio.pi()
 script_path = os.path.abspath(__file__)
 script_dir = os.path.split(script_path)[0]
 keymap_path = os.path.join(script_dir, 'keymap.json')
+print(keymap_path)
 
 # load keymap configuration
 try:
-    with open(keymap_path) as fid:
+    with open(keymap_path, 'w') as fid:
         keymap = json.load(fid)
 except:
     print('Oops something went wrong! Load default keymap configuration')
@@ -53,17 +51,16 @@ with open(keymap_path, 'w') as fid:
 # parse keymap for faster indexing
 keymap_str_index = keymap
 keymap = {}
-events = []
+# events = []
 for key in keymap_str_index:
     int_key = int(key)
     keymap[int_key] = keymap_str_index[key]
-    keymap[int_key]['keyboard'] = eval('uinput.KEY_' + keymap[int_key]['keyboard'])
-    events.append(keymap[int_key]['keyboard'])
+    keymap[int_key]['keyboard'] = eval('e.KEY_' + keymap[int_key]['keyboard'])
+    # events.append(keymap[int_key]['keyboard'])
 del(keymap_str_index)
 
 # create uinput device
-dev = uinput.Device(events)
-
+ui = UInput()
 
 # callback function
 # 0: falling edge
@@ -71,9 +68,10 @@ dev = uinput.Device(events)
 # 2: watchdog timeout
 level_conversion = {0: 1, 1: 0}
 def gpio_callback(pin, level, tick):
-    dev.emit(keymap[pin]['keyboard'], level_conversion[level])
+    ui.write(e.EV_KEY, keymap[pin]['keyboard'], level_conversion[level])
+    ui.syn()
     # debug
-    # print(str(pin) + ' level: ' + str(level) + ' @ ' + str(tick))
+    print(str(pin) + ' level: ' + str(level) + ' @ ' + str(tick))
 
 
 # setup gpio
@@ -92,5 +90,6 @@ except KeyboardInterrupt:
     # clean up
     gpio.stop()
     subprocess.call(['sudo', 'pkill', 'pigpiod'])
+    ui.close()
 
 print('All done!')
