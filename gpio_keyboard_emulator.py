@@ -23,11 +23,10 @@ gpio = pigpio.pi()
 script_path = os.path.abspath(__file__)
 script_dir = os.path.split(script_path)[0]
 keymap_path = os.path.join(script_dir, 'keymap.json')
-print(keymap_path)
 
 # load keymap configuration
 try:
-    with open(keymap_path, 'w') as fid:
+    with open(keymap_path, 'r', encoding='iso-8859-1') as fid:
         keymap = json.load(fid)
 except:
     print('Oops something went wrong! Load default keymap configuration')
@@ -71,7 +70,7 @@ def gpio_callback(pin, level, tick):
     ui.write(e.EV_KEY, keymap[pin]['keyboard'], level_conversion[level])
     ui.syn()
     # debug
-    print(str(pin) + ' level: ' + str(level) + ' @ ' + str(tick))
+    # print(str(pin) + ' level: ' + str(level) + ' @ ' + str(tick))
 
 
 # setup gpio
