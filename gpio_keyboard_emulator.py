@@ -74,6 +74,16 @@ def gpio_callback(pin, level, tick):
     # debug
     # print(str(pin) + ' level: ' + str(level) + ' @ ' + str(tick))
 
+watchdog_time = 5*1000  # 5 sec
+def gpio_timed_callback(pin, level, tick):
+    if level < 2:
+        # normal callback
+        gpio_callback(pin, level, tick)
+        # set watchdog
+        gpio.watchdog(pin, watchdog_time*level_conversion[level])
+    else:
+        # shut down
+        subprocess.call(['sudo', 'shutdown', '-h', 'now'])
 
 # setup gpio
 glitch_filter_time = round(1/30*1000)  # 30 FPS
@@ -81,7 +91,10 @@ for pin in keymap:
     gpio.set_mode(pin, pigpio.INPUT)
     gpio.set_pull_up_down(pin, pigpio.PUD_UP)
     gpio.set_glitch_filter(pin, glitch_filter_time)
-    gpio.callback(pin, pigpio.EITHER_EDGE, gpio_callback)
+    if keymap['controller'] == 'SELECT':
+        gpio.callback(pin, pigpio.EITHER_EDGE, gpio_timed_callback)
+    else:
+        gpio.callback(pin, pigpio.EITHER_EDGE, gpio_callback)
 
 # main loop
 try:
