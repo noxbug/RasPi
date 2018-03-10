@@ -30,18 +30,20 @@ try:
         keymap = json.load(fid)
 except:
     print('Oops something went wrong! Load default keymap configuration')
-    keymap =   {'13':{'controller': 'UP',     'keyboard': 'U'},
-                '19':{'controller': 'DOWN',   'keyboard': 'D'},
-                 '6':{'controller': 'LEFT',   'keyboard': 'L'},
-                '26':{'controller': 'RIGHT',  'keyboard': 'R'},
-                '12':{'controller': 'A',      'keyboard': 'A'},
-                '16':{'controller': 'B',      'keyboard': 'B'},
-                '20':{'controller': 'X',      'keyboard': 'X'},
-                '21':{'controller': 'Y',      'keyboard': 'Y'},
+    # default retroarch keyboard layout
+    # https://docs.libretro.com/guides/retroarch-keyboard-controls/
+    keymap =   {'13':{'controller': 'UP',     'keyboard': 'UP'},
+                '19':{'controller': 'DOWN',   'keyboard': 'DOWN'},
+                 '6':{'controller': 'LEFT',   'keyboard': 'LEFT'},
+                '26':{'controller': 'RIGHT',  'keyboard': 'RIGHT'},
+                '12':{'controller': 'A',      'keyboard': 'X'},
+                '16':{'controller': 'B',      'keyboard': 'Z'},
+                '20':{'controller': 'X',      'keyboard': 'S'},
+                '21':{'controller': 'Y',      'keyboard': 'A'},
                 '23':{'controller': 'SELECT', 'keyboard': 'SPACE'},
                 '22':{'controller': 'START',  'keyboard': 'ENTER'},
-                '27':{'controller': 'L1',     'keyboard': 'E'},
-                '17':{'controller': 'R1',     'keyboard': 'I'}}
+                '27':{'controller': 'L1',     'keyboard': 'Q'},
+                '17':{'controller': 'R1',     'keyboard': 'W'}}
 
 # save keymap
 with open(keymap_path, 'w') as fid:
