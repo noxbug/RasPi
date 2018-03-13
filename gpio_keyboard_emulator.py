@@ -63,6 +63,17 @@ del(keymap_str_index)
 # create uinput device
 ui = UInput()
 
+# hotkeys
+def shutdown():
+    subprocess.call(['sudo', 'shutdown', '-h', 'now'])
+
+def esc():
+    ui.write(e.EV_KEY, e.KEY_ESC, 1)
+    ui.write(e.EV_KEY, e.KEY_ESC, 0)
+    ui.syn()
+
+hotkey_switch = {'SELECT': shutdown, 'START': esc}
+
 # callback function
 # 0: falling edge
 # 1: rising edge
@@ -82,8 +93,8 @@ def gpio_timed_callback(pin, level, tick):
         # set watchdog
         gpio.watchdog(pin, watchdog_time*level_conversion[level])
     else:
-        # shut down
-        subprocess.call(['sudo', 'shutdown', '-h', 'now'])
+        hotkey_switch[keymap[pin]['controller']]()
+
 
 # setup gpio
 glitch_filter_time = round(1/30*1000)  # 30 FPS
@@ -91,7 +102,7 @@ for pin in keymap:
     gpio.set_mode(pin, pigpio.INPUT)
     gpio.set_pull_up_down(pin, pigpio.PUD_UP)
     gpio.set_glitch_filter(pin, glitch_filter_time)
-    if keymap['controller'] == 'SELECT':
+    if (keymap['controller'] == 'SELECT') or (keymap['controller'] == 'START'):
         gpio.callback(pin, pigpio.EITHER_EDGE, gpio_timed_callback)
     else:
         gpio.callback(pin, pigpio.EITHER_EDGE, gpio_callback)
