@@ -91,8 +91,9 @@ def gpio_timed_callback(pin, level, tick):
         # normal callback
         gpio_callback(pin, level, tick)
         # set watchdog
-        gpio.watchdog(pin, watchdog_time*level_conversion[level])
+        gpio.set_watchdog(pin, watchdog_time*level_conversion[level])
     else:
+        print('Hotkey detected!')
         hotkey_switch[keymap[pin]['controller']]()
 
 
@@ -102,7 +103,7 @@ for pin in keymap:
     gpio.set_mode(pin, pigpio.INPUT)
     gpio.set_pull_up_down(pin, pigpio.PUD_UP)
     gpio.set_glitch_filter(pin, glitch_filter_time)
-    if (keymap['controller'] == 'SELECT') or (keymap['controller'] == 'START'):
+    if (keymap[pin]['controller'] == 'SELECT') or (keymap[pin]['controller'] == 'START'):
         gpio.callback(pin, pigpio.EITHER_EDGE, gpio_timed_callback)
     else:
         gpio.callback(pin, pigpio.EITHER_EDGE, gpio_callback)
