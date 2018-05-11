@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, url_for
-from kodi import Kodi
+from lib.kodi import Kodi as Kodi
 
 
 class Now_playing:
@@ -79,6 +79,60 @@ def previous():
 @app.route('/remote')
 def remote():
     return render_template('remote.html', now_playing=now_playing)
+
+@app.route('/up')
+def up():
+    global kodi
+    kodi.input_up()
+    return redirect(url_for('remote'))
+
+@app.route('/down')
+def down():
+    global kodi
+    kodi.input_down()
+    return redirect(url_for('remote'))
+
+@app.route('/left')
+def left():
+    global kodi
+    kodi.input_left()
+    return redirect(url_for('remote'))
+
+@app.route('/right')
+def right():
+    global kodi
+    kodi.input_right()
+    return redirect(url_for('remote'))
+
+@app.route('/select')
+def select():
+    global kodi
+    kodi.input_select()
+    return redirect(url_for('remote'))
+
+@app.route('/back')
+def back():
+    global kodi
+    kodi.input_back()
+    return redirect(url_for('remote'))
+
+@app.route('/home')
+def home():
+    global kodi
+    kodi.input_home()
+    return redirect(url_for('remote'))
+
+@app.route('/context_menu')
+def context_menu():
+    global kodi
+    kodi.input_context_menu()
+    return redirect(url_for('remote'))
+
+@app.route('/info')
+def info():
+    global kodi
+    kodi.input_info()
+    return redirect(url_for('remote'))
 
 @app.route('/translate_sub')
 def translate_sub():

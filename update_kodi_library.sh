@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python3 ~/PycharmProjects/raspi/kodi.py -update
+python3 ~/PycharmProjects/raspi/lib/kodi.py -update

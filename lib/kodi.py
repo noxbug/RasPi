@@ -1,4 +1,4 @@
-from subtitle import Subtitle
+from lib.subtitle import Subtitle as Subtitle
 from time import sleep
 import requests
 import urllib
@@ -81,6 +81,60 @@ class Kodi:
             return position
         except:
             return {}
+
+    def input_up(self):
+        try:
+            self.request('Input.Up')
+        except:
+            pass
+
+    def input_down(self):
+        try:
+            self.request('Input.Down')
+        except:
+            pass
+
+    def input_left(self):
+        try:
+            self.request('Input.Left')
+        except:
+            pass
+
+    def input_right(self):
+        try:
+            self.request('Input.Right')
+        except:
+            pass
+
+    def input_select(self):
+        try:
+            self.request('Input.Select')
+        except:
+            pass
+
+    def input_back(self):
+        try:
+            self.request('Input.Back')
+        except:
+            pass
+
+    def input_home(self):
+        try:
+            self.request('Input.Home')
+        except:
+            pass
+
+    def input_context_menu(self):
+        try:
+            self.request('Input.ContextMenu')
+        except:
+            pass
+
+    def input_info(self):
+        try:
+            self.request('Input.Info')
+        except:
+            pass
 
     def album_art(self):
         try:

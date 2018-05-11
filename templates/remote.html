@@ -11,31 +11,27 @@
 <div id="remote">
     <div>
         <p></p>
-        <button class="button"><i class="material-icons">keyboard_arrow_up</i></button>
+        <button class="button"><a href="{{url_for('up')}}"><i class="material-icons">keyboard_arrow_up</i></a></button>
         <p></p>
     </div>
     <div>
-        <button class="button"><i class="material-icons">keyboard_arrow_left</i></button>
-        <button class="button"><i class="material-icons">crop_square</i></button>
-        <button class="button"><i class="material-icons">keyboard_arrow_right</i></button>
+        <button class="button"><a href="{{url_for('left')}}"><i class="material-icons">keyboard_arrow_left</i></a></button>
+        <button class="button"><a href="{{url_for('select')}}"><i class="material-icons">crop_square</i></a></button>
+        <button class="button"><a href="{{url_for('right')}}"><i class="material-icons">keyboard_arrow_right</i></a></button>
     </div>
     <div>
         <p></p>
-        <button class="button"><i class="material-icons">keyboard_arrow_down</i></button>
+        <button class="button"><a href="{{url_for('down')}}"><i class="material-icons">keyboard_arrow_down</i></a></button>
         <p></p>
     </div>
 </div>
 
-<div id="player-controls">
-    <button class="button"><i class="material-icons">arrow_back</i></button>
-    <button class="button"><i class="material-icons">comment</i></button>
-    <button class="button"><i class="material-icons">info_outline</i></button>
-</div>
 
 <div id="bottom-bar">
-    <button class="button"><i class="material-icons">arrow_back</i></button>
-    <button class="button"><i class="material-icons">comment</i></button>
-    <button class="button"><i class="material-icons">info_outline</i></button>
+    <button class="button"><a href="{{url_for('back')}}"><i class="material-icons">arrow_back</i></a></button>
+    <button class="button"><a href="{{url_for('home')}}"><i class="material-icons">home</i></a></button>
+    <button class="button"><a href="{{url_for('context_menu')}}"><i class="material-icons">comment</i></a></button>
+    <button class="button"><a href="{{url_for('info')}}"><i class="material-icons">info_outline</i></a></button>
 </div>
 
 {% endblock %}
