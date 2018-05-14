@@ -27,8 +27,32 @@
         </div>
     </div>
 
+
     {% block content %}
     {% endblock %}
+
+    {% if now_playing.active == True %}
+    <div id="mini-player">
+        <div id="mini-album-art">
+            <img src="{{now_playing.album_art}}" alt="">
+        </div>
+        <div id="mini-now-playing">
+            <h1>{{now_playing.title}}</h1>
+            <h2>{{now_playing.artist}}</h2>
+        </div>
+        <div id="mini-player-controls">
+            <button class="button"><a href="{{url_for('play')}}">
+            {% if now_playing.play == True %}
+                <i class="material-icons">pause</i>
+            {% else %}
+                <i class="material-icons">play_arrow</i>
+            {% endif %}
+            </a></button>
+        </div>
+    </div>
+    {% endif %}
+
+
 </div>
 </div>
 </body>

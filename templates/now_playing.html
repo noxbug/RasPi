@@ -8,9 +8,11 @@
 
 {% block content %}
 
+{% if now_playing.active == True %}
 <div id="album-art">
     <a href="{{url_for('index')}}"><img src="{{now_playing.album_art}}" alt=""></a>
 </div>
+{% endif %}
 
 
 <div id="now-playing">
@@ -40,4 +42,7 @@
     <button class="button"><a href="{{url_for('next')}}"><i class="material-icons">fast_forward</i></a></button>
 </div>
 
+<style>#mini-player {display: none;}</style>
+
 {% endblock %}
+
