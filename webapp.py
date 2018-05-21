@@ -18,10 +18,10 @@ class NowPlaying:
         self.__init__()
 
     def update(self):
-        player = kodi.active_player()
+        player = kodi.get_active_player()
         if len(player) != 0:
             self.active = True
-            item = kodi.item()
+            item = kodi.get_item()
             now_playing.title = item['label']
             if item['type'] == 'episode':
                 now_playing.artist = item['showtitle']
@@ -51,7 +51,7 @@ def play():
     global now_playing
     try:
         now_playing.play = kodi.play_pause()
-        now_playing.position = kodi.position()['percentage']
+        now_playing.get_position = kodi.get_position()['percentage']
         now_playing.update()
     except:
         now_playing.reset()
@@ -70,7 +70,7 @@ def next():
     global kodi
     global now_playing
     try:
-        now_playing.position = kodi.fast_forward()['percentage']
+        now_playing.get_position = kodi.fast_forward()['percentage']
     except:
         now_playing.reset()
     return redirect(url_for('index'))
@@ -80,7 +80,7 @@ def previous():
     global kodi
     global now_playing
     try:
-        now_playing.position = kodi.fast_rewind()['percentage']
+        now_playing.get_position = kodi.fast_rewind()['percentage']
     except:
         now_playing.reset()
     return redirect(url_for('index'))

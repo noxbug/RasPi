@@ -30,7 +30,7 @@ class Kodi:
         info = self.request('JSONRPC.Introspect', {'filter': {'id': method, 'type': 'method'}})
         return info
 
-    def active_player(self):
+    def get_active_player(self):
         try:
             player = self.request('Player.GetActivePlayers')
             return player[0]
@@ -38,7 +38,7 @@ class Kodi:
             print('No active players')
             return {}
 
-    def item(self):
+    def get_item(self):
         try:
             item = self.request('Player.GetItem', {'properties': ['title', 'album', 'artist', 'season', 'episode', 'duration', 'showtitle', 'tvshowid', 'thumbnail', 'file', 'fanart', 'streamdetails'], 'playerid': 1})
             return item['item']
@@ -61,7 +61,7 @@ class Kodi:
         except:
             pass
 
-    def position(self):
+    def get_position(self):
         try:
             position = self.request('Player.GetProperties', {'playerid': 1, 'properties': ['percentage']})
             return position
@@ -138,7 +138,7 @@ class Kodi:
 
     def album_art(self):
         try:
-            item = self.item()
+            item = self.get_item()
             album_art = self.request('Files.PrepareDownload', {'path': item['thumbnail']})
             album_art_url = 'http://' + self.host + ':' + str(self.port) + '/' + album_art['details']['path']
             return album_art_url
@@ -152,7 +152,7 @@ class Kodi:
 
     def translate_subtitle(self):
         try:
-            item = self.item()
+            item = self.get_item()
             subtitle = Subtitle()
             subtitle.open(item['file'])
             subtitle.translate()
