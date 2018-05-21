@@ -30,3 +30,4 @@ def help(method):
 def ping():
     """Ping responder"""
     ping = request('JSONRPC.Ping')
+    return ping
