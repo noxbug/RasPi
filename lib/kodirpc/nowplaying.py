@@ -1,5 +1,6 @@
 from . import player
 from . import rpc
+import threading
 import datetime
 import sched
 import time
@@ -16,14 +17,14 @@ global totaltime
 global active
 
 
-def convert_time(time):
+def _convert_time(time):
     """Convert time dictionary to datetime.time object"""
     return datetime.time(time['hours'], time['minutes'], time['seconds'], time['milliseconds']*1000)
 
 
-def convert_deltatime(time):
+def _convert_deltatime(time):
     """Convert datetime.time object to datetime.deltatime object"""
-    return datetime.timedelta(time.hour, time.minute, time.second)
+    return datetime.timedelta(hours=time.hour, minutes=time.minute, seconds=time.second, microseconds=time.microsecond)
 
 
 def reset():
@@ -65,8 +66,8 @@ def update():
         albumart = player.get_album_art_url()
         pos = player.get_position()
         position = pos['percentage']
-        currenttime = convert_time(pos['time'])
-        totaltime = convert_time(pos['totaltime'])
+        currenttime = _convert_time(pos['time'])
+        totaltime = _convert_time(pos['totaltime'])
         play = bool(pos['speed'])
         active = True
 
@@ -81,6 +82,8 @@ def update():
         elif item['type'] == 'movie':
             artist = ''
             album = ''
+            
+        print('Update complete')
     except:
         reset()
 
@@ -100,10 +103,17 @@ def smart_updater():
     # update now playing section
     update()
 
-    # calculate expected end time + 3s margin
-    endtime = datetime.datetime.now()+convert_deltatime(totaltime)-convert_deltatime(currenttime)+datetime.timedelta(0, 0, 3)
+    # calculate expected end time + 3sec margin
+    endtime = _convert_deltatime(totaltime) - _convert_deltatime(currenttime) + datetime.timedelta(seconds=3)
 
     # code based on: https://pymotw.com/2/sched/
     scheduler = sched.scheduler(time.time, time.sleep)
 
-    print('test')
+    # schedule event
+    update_event = scheduler.enter(endtime, 1, update)
+
+    # start a thread to run the events
+    thread = threading.Thread(target=scheduler.run)
+    thread.start()
+
+    print('done')

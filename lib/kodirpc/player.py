@@ -8,7 +8,7 @@ def get_active_player():
         player = rpc.request('Player.GetActivePlayers')
         return player[0]
     except:
-        print('No active player')
+        print('WARNING: No active player')
         return {}
 
 
@@ -28,7 +28,7 @@ def get_item():
         item = rpc.request('Player.GetItem', {'playerid': player['playerid'], 'properties': properties})
         return item['item']
     except:
-        print('Could not get item')
+        print('WARNING: Could not get item')
         return {}
 
 
