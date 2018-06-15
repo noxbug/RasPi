@@ -17,14 +17,25 @@ global totaltime
 global active
 
 
-def _convert_time(time):
+def _dict_to_datetime(time):
     """Convert time dictionary to datetime.time object"""
     return datetime.time(time['hours'], time['minutes'], time['seconds'], time['milliseconds']*1000)
 
 
-def _convert_deltatime(time):
-    """Convert datetime.time object to datetime.deltatime object"""
+def _datetime_to_deltatime(time):
+    """
+    Convert datetime.time object to datetime.deltatime object
+    Used to do calculations
+    """
     return datetime.timedelta(hours=time.hour, minutes=time.minute, seconds=time.second, microseconds=time.microsecond)
+
+
+def _deltatime_to_seconds(time):
+    """
+    Convert datetime.deltatime object to seconds
+    Used for delay
+    """
+    return time.days*24*60*60 + time.seconds + time.microseconds/1000000
 
 
 def reset():
@@ -66,8 +77,8 @@ def update():
         albumart = player.get_album_art_url()
         pos = player.get_position()
         position = pos['percentage']
-        currenttime = _convert_time(pos['time'])
-        totaltime = _convert_time(pos['totaltime'])
+        currenttime = _dict_to_datetime(pos['time'])
+        totaltime = _dict_to_datetime(pos['totaltime'])
         play = bool(pos['speed'])
         active = True
 
@@ -103,17 +114,20 @@ def smart_updater():
     # update now playing section
     update()
 
-    # calculate expected end time + 3sec margin
-    endtime = _convert_deltatime(totaltime) - _convert_deltatime(currenttime) + datetime.timedelta(seconds=3)
+    try:
+        # calculate expected end time + 3sec margin
+        endtime = _deltatime_to_seconds( _datetime_to_deltatime(totaltime) - _datetime_to_deltatime(currenttime) + datetime.timedelta(seconds=3) )
 
-    # code based on: https://pymotw.com/2/sched/
-    scheduler = sched.scheduler(time.time, time.sleep)
+        # code based on: https://pymotw.com/2/sched/
+        scheduler = sched.scheduler(time.time, time.sleep)
 
-    # schedule event
-    update_event = scheduler.enter(endtime, 1, update)
+        # schedule event
+        update_event = scheduler.enter(endtime, 1, update)
 
-    # start a thread to run the events
-    thread = threading.Thread(target=scheduler.run)
-    thread.start()
+        # start a thread to run the events
+        thread = threading.Thread(target=scheduler.run)
+        thread.start()
 
-    print('done')
+        print('done')
+    except:
+        pass
