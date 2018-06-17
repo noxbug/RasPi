@@ -1,4 +1,4 @@
-from . import rpc
+from . import rpc as _rpc
 
 
 def update():
@@ -6,7 +6,7 @@ def update():
     Cleans the library from non-existent items
     Scans the audio sources for new library items
     """
-    rpc.request('AudioLibrary.Clean')
-    rpc.request('VideoLibrary.Clean')
-    rpc.request('AudioLibrary.Scan')
-    rpc.request('VideoLibrary.Scan')
+    _rpc.request('AudioLibrary.Clean')
+    _rpc.request('VideoLibrary.Clean')
+    _rpc.request('AudioLibrary.Scan')
+    _rpc.request('VideoLibrary.Scan')

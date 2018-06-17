@@ -8,32 +8,32 @@
 
 {% block content %}
 
-{% if now_playing.active == True %}
+{% if kodi.nowplaying.active == True %}
 <div id="album-art">
-    <a href="{{url_for('index')}}"><img src="{{now_playing.album_art}}" alt=""></a>
+    <a href="{{url_for('index')}}"><img src="{{kodi.nowplaying.albumart}}" alt=""></a>
 </div>
 {% endif %}
 
 
 <div id="now-playing">
-    <h1>{{now_playing.title}}</h1>
-    <h2>{{now_playing.artist}}</h2>
+    <h1>{{kodi.nowplaying.title}}</h1>
+    <h2>{{kodi.nowplaying.artist}}</h2>
 </div>
 
 <div id="progress-bar">
     <div id="progress-indicator"></div>
-    <style>#progress-indicator {width: {{now_playing.position}}%;}</style>
+    <style>#progress-indicator {width: {{kodi.nowplaying.position}}%;}</style>
 </div>
 
 
 <div id="player-controls">
     <button class="button"><a href="{{url_for('previous')}}"><i class="material-icons">fast_rewind</i></a></button>
     <button class="button"><a href="{{url_for('play')}}">
-        {% if now_playing.play == True %}
+        {% if kodi.nowplaying.play == True %}
         <i class="material-icons">pause</i>
         {% else %}
         <i class="material-icons">play_arrow</i>
-            {% if now_playing.position > 0 %}
+            {% if kodi.nowplaying.position > 0 %}
             <style>#progress-bar {visibility: visible;}</style>
             {% endif %}
         {% endif %}

@@ -1,6 +1,7 @@
 import lib.kodirpc as kodi
+import time
 
 kodi.connect('192.168.1.10')
-kodi.nowplaying.smart_updater()
+kodi.nowplaying.update()
 
-print(kodi.nowplaying.title)
+time.sleep(3*60)

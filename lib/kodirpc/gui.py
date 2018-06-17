@@ -1,6 +1,6 @@
-from . import rpc
+from . import rpc as _rpc
 
 
 def up():
     """Toggle fullscreen/GUI"""
-    rpc.request('GUI.SetFullscreen')
+    _rpc.request('GUI.SetFullscreen')

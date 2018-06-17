@@ -5,7 +5,7 @@
     <meta name="viewport" content="width-device-width, initial-scale=1.0">
     <link href="{{url_for('static', filename='style.css')}}" rel="stylesheet" type="text/css">
     <link rel="manifest" href="/static/manifest.json">
-    <style>#background {background-image: url("{{now_playing.album_art}}");}</style>
+    <style>#background {background-image: url("{{kodi.nowplaying.albumart}}");}</style>
 </head>
 
 <body>
@@ -31,18 +31,18 @@
     {% block content %}
     {% endblock %}
 
-    {% if now_playing.active == True %}
+    {% if kodi.nowplaying.active == True %}
     <div id="mini-player">
         <div id="mini-album-art">
-            <img src="{{now_playing.album_art}}" alt="">
+            <img src="{{kodi.nowplaying.albumart}}" alt="">
         </div>
         <div id="mini-now-playing">
-            <h1>{{now_playing.title}}</h1>
-            <h2>{{now_playing.artist}}</h2>
+            <h1>{{kodi.nowplaying.title}}</h1>
+            <h2>{{kodi.nowplaying.artist}}</h2>
         </div>
         <div id="mini-player-controls">
             <button class="button"><a href="{{url_for('play')}}">
-            {% if now_playing.play == True %}
+            {% if kodi.nowplaying.play == True %}
                 <i class="material-icons">pause</i>
             {% else %}
                 <i class="material-icons">play_arrow</i>

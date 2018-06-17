@@ -5,7 +5,7 @@ import datetime
 import sched
 import time
 
-
+# Global variables
 global title
 global artist
 global album
@@ -95,11 +95,16 @@ def update():
             album = ''
             
         print('Update complete')
+
+        if play:
+            # schedule an auto update event
+            smart_update_service()
+            print('Auto update event scheduled...')
     except:
         reset()
 
 
-def smart_updater():
+def smart_update_service():
     """Automatic update the now playing section based on the expected end time of now playing item"""
     global title
     global artist
@@ -111,23 +116,16 @@ def smart_updater():
     global totaltime
     global active
 
-    # update now playing section
-    update()
+    # calculate expected end time + 3sec margin
+    endtime = _deltatime_to_seconds( _datetime_to_deltatime(totaltime) - _datetime_to_deltatime(currenttime) + datetime.timedelta(seconds=3) )
 
-    try:
-        # calculate expected end time + 3sec margin
-        endtime = _deltatime_to_seconds( _datetime_to_deltatime(totaltime) - _datetime_to_deltatime(currenttime) + datetime.timedelta(seconds=3) )
+    # code based on: https://pymotw.com/2/sched/
+    scheduler = sched.scheduler(time.time, time.sleep)
 
-        # code based on: https://pymotw.com/2/sched/
-        scheduler = sched.scheduler(time.time, time.sleep)
+    # schedule event
+    update_event = scheduler.enter(endtime, 1, update)
 
-        # schedule event
-        update_event = scheduler.enter(endtime, 1, update)
+    # create a thread to run the events
+    thread = threading.Thread(target=scheduler.run)
+    thread.start()
 
-        # start a thread to run the events
-        thread = threading.Thread(target=scheduler.run)
-        thread.start()
-
-        print('done')
-    except:
-        pass

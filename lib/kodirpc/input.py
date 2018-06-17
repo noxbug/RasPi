@@ -1,46 +1,47 @@
-from . import rpc
-
+from . import rpc as _rpc
+from . import nowplaying as _nowplaying
 
 def up():
     """Navigate up in GUI"""
-    rpc.request('Input.Up')
+    _rpc.request('Input.Up')
 
 
 def down():
     """Navigate down in GUI"""
-    rpc.request('Input.Down')
+    _rpc.request('Input.Down')
 
 
 def left():
     """Navigate left in GUI"""
-    rpc.request('Input.Left')
+    _rpc.request('Input.Left')
 
 
 def right():
     """Navigate right in GUI"""
-    rpc.request('Input.Right')
+    _rpc.request('Input.Right')
 
 
 def select():
     """Select current item in GUI"""
-    rpc.request('Input.Select')
+    _rpc.request('Input.Select')
+    _nowplaying.update()
 
 
 def back():
     """Goes back in GUI"""
-    rpc.request('Input.Back')
+    _rpc.request('Input.Back')
 
 
 def home():
     """Goes to home window in GUI"""
-    rpc.request('Input.Home')
+    _rpc.request('Input.Home')
 
 
 def context_menu():
     """Shows the context menu"""
-    rpc.request('Input.ContextMenu')
+    _rpc.request('Input.ContextMenu')
 
 
 def info():
     """Shows the information dialog"""
-    rpc.request('Input.Info')
+    _rpc.request('Input.Info')
