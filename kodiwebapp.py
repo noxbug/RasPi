@@ -3,7 +3,7 @@ import lib.kodirpc as kodi
 
 app = Flask(__name__)
 
-kodi.connect('192.168.1.10')
+kodi.connection.new('192.168.1.10')
 
 @app.route('/')
 @app.route('/index')
