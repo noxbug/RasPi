@@ -1,0 +1,3 @@
+[submodule "lib/kodirpc"]
+	path = lib/kodirpc
+	url = https://github.com/noxbug/kodirpc
